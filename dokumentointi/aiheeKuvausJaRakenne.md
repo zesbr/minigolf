@@ -3,12 +3,11 @@
 
 ## 1. Aiheen kuvaus
 Kaksiulotteinen minigolf simulaatio. Pelin idana on että pelaaja yrittää löydä tai ns. putata pallon mahdollisimman vähillä lyönneillä reikään. Peliä pelaatan oikean minigolfin tavoin radoilla, jotka ovat muodoiltaan vaihtelevia. Ratoja ympäröi seinät ja radoilla voi olla erilaisia 
-esteitä pelin hankaloittamiseksi. Pelikierros aloitetaan radan aloituspaikalta ja sitä jatketaan siitä mihin edellinen lyönti päättyi. Pelikierros päättyy kun pallo pelataan reikään tai jos lyöntejä on käytetty kuusi.
+esteitä pelin hankaloittamiseksi. Peli aloitetaan radan aloituspaikalta ja uusi lyönti aloitetaan siitä mihin edellinen lyönti päättyi. Pelikierros päättyy kun pallo pelataan reikään tai jos lyöntejä on käytetty kuusi.
 
-Peliä ohjataan näppäimistöllä, jolla määritetään jokaista lyöntiä varten lyönnin suunta sekä voima. Lisäominaisuutena lyönnille voi määrittää myös ylä- tai alakierteen. Lyönti vaikuttaa pallon liikkeeseen joka määrittää miten pallo radalla etenee ja mihin kohtaa radalla pallon 
-liike lopulta pysähtyy. Edetessään pallo voi törmätä esteisiin, jotka vaikuttavat myös pallon liikkeen jatkoon. Lisäominaisuutena radan pinnanmuodot voivat vaikuttaa pallon liikkeeseen. Pallon liike ja käyttäytyminen tulee noudattamaan jossain määrin simuloituja fysiikan lakeja.
+Peliä ohjataan näppäimistöllä, jolla määritetään jokaista lyöntiä varten lyönnin suunta sekä voima. Lisäominaisuutena lyönnille voidaan määrittää myös ylä- tai alakierre. Lyönti vaikuttaa pallon liikkeeseen eli siihen mihin suuntaan ja millä voimalla pallo alussa lähtee. Pallon edetessä sen liike hidastuu kunnes se lopulta pysähtyy, jonka jälkeen peliä jatketaan uudella lyönnillä. Edetessään pallo voi törmätä esteisiin, jolloin pallon liikkeen suunta ja nopeus muuttuvat. Lisäominaisuutena pelattavan radan pinnanmuodot voivat vaikuttaa pallon liikkeeseen. Pallon liike ja käyttäytyminen tulee noudattamaan jossain määrin simuloituja fysiikan lakeja.
 
-Peli tulee olemaan kaksiulotteinen, joka on kuvattu rataan nähden ylhäältä päin. Peliä voi pelata yksin tai kaveria vastaan moninpelinä ja se tulee noudattamaan jossain määrin oikean minigolfin sääntöjä.
+Peli tulee olemaan kaksiulotteinen, joka on kuvattu rataan nähden ylhäältä päin. Peliä voi pelata yksin tai kaveria vastaan ja se tulee noudattamaan jossain määrin oikean minigolfin sääntöjä.
 
 ## 2. Alustavat vaatimukset
 HUOM! Toissijaiset vaatimukset on *kursivoitu*
@@ -24,12 +23,9 @@ HUOM! Toissijaiset vaatimukset on *kursivoitu*
 * Pelikierroksen aikana pidetään kirjaa lyöntien lukumäärästä
 * *Pelissä pidetään kirjaa ennätyspisteitä eli ns. high scoreista*
 
-#### Ohjaus ja pelattavuus:
-* Peliä ohjataa näppäimistöllä
-* *Peliä voidaan ohjata hiirellä tai kosketusnäytöllä*
-* Pelikierros aloitetaan radan aloituspaikalta
-* Pelikierrosta jatketaan siitä mihin edellinen lyönti päättyi
-* Pelikierros päätty kun pallo on saatu reikään tai pelikierrokseen on käytetty kuusi lyöntiä
+#### Ohjaus:
+* Lyönnin suunta ja voima määritetään näppäinkomennoilla
+* *Lyönnin suunta ja voima voidaan myös määrittää hiirellä tai kosketusnäytöltä*
 
 #### Fysiikkamoottori:
 * Lyönneillä on suunta ja voima
@@ -40,20 +36,19 @@ HUOM! Toissijaiset vaatimukset on *kursivoitu*
 * *Lyöntien kierre vaikuttaa pallon pyörimisliikkeeseen*
 * *Pallon pyörimisliike vaikuttaa pallon liikkeeseen*
 * Pallon osuminen objektiin vaikuttaa liikkeeseen
-* *Radan korkeuserojen ja kaltevuuksien tulee vaikuttaa pallon liikkeeseen*
-* *Radan päällyste vaikuttaa pallon nopeuteen ja pyörimisliikkeeseen*
-* *Objektin materiaalia vaikuttaa pallon liikkeeseen*
+* *Radan pinnanmuodot vaikuttaa pallon liikkeeseen*
+* *Radan päällyste vaikuttaa pallon nopeuteen*
 
-#### Radat (pelimaailma): 
+#### Radat: 
 * Radalla on pohjapiirros, joka määrittää radan mitat
 * Rata voi olla tasainen eli siinä ei ole korkeuseroja
 * *Rata voi sisältää korkeuseroja ja/tai kaltevuuksia*
 * *Radalla on päällyste, joka on jotain materiaalia*
 * Radalla on yksi aloituslyöntipaikka
 * Radalla on yksi reikä
-* Radalla voi olla objekteja esim. seiniä tai esteitä, jotka ovat jotain materiaalia
+* Radalla voi olla objekteja esim. seiniä tai esteitä
 * Objektit voivat olla kulmikkaita
-* *Objektit voivat olla pyöreitä tai kaarevia*
+* *Objektit voivat olla pyöreitä, kaarevia tai kuperia*
 * Objektit voivat olla staattisia esim. seinät
 * *Objektit voivat olla dynaamisia (liikkuvia) esim. tuulimyllyt*
 
@@ -63,7 +58,6 @@ HUOM! Toissijaiset vaatimukset on *kursivoitu*
 * Pallon pudotessa reikään tulee aiheuttaa ääniefekti
 * *Onnistuneen väylän (par tai alle) jälkeen tulee seurata ääniefekti (aplodit)*
 * *Epäonnistuneen väylän (yli par) jälkeen tulee seurata ääniefekti (buuaus)*
-* *Erilaisen materiaalin tulee aiheuttaa erilainen ääniefekti*
 * *Lyönnin ja törmäyksen voiman tulee vaikuttaa ääniefektiin*
 
 ## 3. Käyttötapaukset
@@ -74,7 +68,7 @@ HUOM! Toissijaiset vaatimukset on *kursivoitu*
 
 * Pelaaja aloittaa uuden pelin
 * Pelaaja määrittää osallistujat
-* Pelaaja valitsee radan tai radat
-* Pelaaja suorittaa lyönnin 
+* Pelaaja valitsee haluamansa radan
+* Pelaaja suorittaa lyönnin
 * Pelaaja keskeyttä pelin
 * Pelaaja lopettaa pelin
