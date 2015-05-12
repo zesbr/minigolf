@@ -55,14 +55,14 @@ HUOM! Toissijaiset vaatimukset on *kursivoitu*
 * Objektit voivat olla kulmikkaita
 * *Objektit voivat olla pyöreitä tai kaarevia*
 * Objektit voivat olla staattisia esim. seinät
-* *Objektit voivat olla dynaamisia (liikkuvia) esim. tuulimyllyt 
+* *Objektit voivat olla dynaamisia (liikkuvia) esim. tuulimyllyt*
 
 #### Erikoistehosteet:
 * Lyönnin tulee aiheuttaa ääniefekti
 * Pallon osuessa objektiin tulee aiheuttaa ääniefekti
 * Pallon pudotessa reikään tulee aiheuttaa ääniefekti
-* *Onnistuneen väylän (par tai alle) jälkeen tulee seurata ääniefekti (aplodit)
-* *Epäonnistuneen väylän (yli par) jälkeen tulee seurata ääniefekti (buuaus)
+* *Onnistuneen väylän (par tai alle) jälkeen tulee seurata ääniefekti (aplodit)*
+* *Epäonnistuneen väylän (yli par) jälkeen tulee seurata ääniefekti (buuaus)*
 * *Erilaisen materiaalin tulee aiheuttaa erilainen ääniefekti*
 * *Lyönnin ja törmäyksen voiman tulee vaikuttaa ääniefektiin*
 
