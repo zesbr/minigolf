@@ -33,7 +33,7 @@ HUOM! Toissijaiset vaatimukset on *kursivoitu*
 
 #### Fysiikkamoottori:
 * Lyönneillä on suunta ja voima
-* *Lyönneillä on kierre (front/backspin)*
+* *Lyönneillä voi olla ylä- tai alakierre*
 * Pallolla on liike, mikä kertoo pallon sen hetkisen suunnan ja nopeuden
 * *Pallola on pyörimisliike, mikä kertoo pallon pyörimissuunnan ja pyörimisnopeuden*
 * Lyöntien suunta ja voima vaikuttaa pallon liikkeeseen
