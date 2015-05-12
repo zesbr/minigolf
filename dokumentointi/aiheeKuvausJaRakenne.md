@@ -47,7 +47,7 @@ HUOM! Toissijaiset vaatimukset on *kursivoitu*
 #### Radat (pelimaailma): 
 * Radalla on pohjapiirros, joka määrittää radan mitat
 * Rata voi olla tasainen eli siinä ei ole korkeuseroja
-* *Rata voi sisältää korkeuseroja ja/tai kaltevuuksia
+* *Rata voi sisältää korkeuseroja ja/tai kaltevuuksia*
 * *Radalla on päällyste, joka on jotain materiaalia*
 * Radalla on yksi aloituslyöntipaikka
 * Radalla on yksi reikä
