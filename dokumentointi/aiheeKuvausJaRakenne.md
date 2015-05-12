@@ -40,7 +40,7 @@ HUOM! Toissijaiset vaatimukset on *kursivoitu*
 * *Lyöntien kierre vaikuttaa pallon pyörimisliikkeeseen*
 * *Pallon pyörimisliike vaikuttaa pallon liikkeeseen*
 * Pallon osuminen objektiin vaikuttaa liikkeeseen
-* *Radan korkeuserojen ja kaltevuuksien tulee vaikuttaa pallon liikkeeseen
+* *Radan korkeuserojen ja kaltevuuksien tulee vaikuttaa pallon liikkeeseen*
 * *Radan päällyste vaikuttaa pallon nopeuteen ja pyörimisliikkeeseen*
 * *Objektin materiaalia vaikuttaa pallon liikkeeseen*
 
