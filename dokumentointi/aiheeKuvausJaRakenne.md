@@ -66,7 +66,7 @@ HUOM! Toissijaiset vaatimukset on *kursivoitu*
 * *Erilaisen materiaalin tulee aiheuttaa erilainen ääniefekti*
 * *Lyönnin ja törmäyksen voiman tulee vaikuttaa ääniefektiin*
 
-## 3. Käyttötapaukset:
+## 3. Käyttötapaukset
 
 **Käyttäjät:** Pelaaja
 
