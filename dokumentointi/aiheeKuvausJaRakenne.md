@@ -1,14 +1,14 @@
 #Mingolf-peli :golf: 
 *Ohjelmoinnin harjoitustyö, kesä 2015*
 
-## 1. Kuvaus
-Kaksiulotteinen minigolf simulaatio. Pelin idana on että pelaaja yrittää löydä tai "putata" pallon mahdollisimman vähillä lyönneillä reikään. Peliä pelaatan oikean minigolfin tavoin radoilla, jotka ovat muodoiltaan vaihtelevia. Ratoja ympäröi seinät ja radoilla voi olla erilaisia 
-esteitä pelin hankaloittamiseksi. Pelikierros aloitetaan radan aloituspaikalta ja jatketaan siitä mihin edellinen lyönti päättyi. Pelikierros päättyy kun pallo pelataan reikään tai jos lyöntejä on käytetty kuusi.
+## 1. Aiheen kuvaus
+Kaksiulotteinen minigolf simulaatio. Pelin idana on että pelaaja yrittää löydä tai ns. putata pallon mahdollisimman vähillä lyönneillä reikään. Peliä pelaatan oikean minigolfin tavoin radoilla, jotka ovat muodoiltaan vaihtelevia. Ratoja ympäröi seinät ja radoilla voi olla erilaisia 
+esteitä pelin hankaloittamiseksi. Pelikierros aloitetaan radan aloituspaikalta ja sitä jatketaan siitä mihin edellinen lyönti päättyi. Pelikierros päättyy kun pallo pelataan reikään tai jos lyöntejä on käytetty kuusi.
 
-Peliä ohjataan näppäimistöllä, jossa jokaista lyöntiä varten määritetään lyönnin suunta sekä voima. Lisäominaisuutena lyönnille voi määrittää myös ylä- tai alakierteen. Lyönti vaikuttaa pallon liikkeeseen joka määrittää miten pallo radalla etenee ja mihin kohtaa radalla pallon 
-liike lopulta pysähtyy. Edetessään, pallo voi törmätä esteisiin, jotka vaikuttavat myös pallon liikeen jatkoon.  Lisäominaisuutena radan pinnanmuodot voivat vaikuttaa pallon liikkeeseen. Pallon liike ja käyttäytyminen noudatta jossain määrin simuloituja fysiikan ja liikkeen lakeja.
+Peliä ohjataan näppäimistöllä, jolla määritetään jokaista lyöntiä varten lyönnin suunta sekä voima. Lisäominaisuutena lyönnille voi määrittää myös ylä- tai alakierteen. Lyönti vaikuttaa pallon liikkeeseen joka määrittää miten pallo radalla etenee ja mihin kohtaa radalla pallon 
+liike lopulta pysähtyy. Edetessään pallo voi törmätä esteisiin, jotka vaikuttavat myös pallon liikkeen jatkoon. Lisäominaisuutena radan pinnanmuodot voivat vaikuttaa pallon liikkeeseen. Pallon liike ja käyttäytyminen tulee noudattamaan jossain määrin simuloituja fysiikan lakeja.
 
-Peli tulee olemaan kaksiulotteinen, joka on kuvattu pystysuoraan ylhäältä päin. Peliä voi pelata yksin tai kaveria vastaan ns. moninpelinä.
+Peli tulee olemaan kaksiulotteinen, joka on kuvattu rataan nähden ylhäältä päin. Peliä voi pelata yksin tai kaveria vastaan moninpelinä ja se tulee noudattamaan jossain määrin oikean minigolfin sääntöjä.
 
 ## 2. Alustavat vaatimukset
 HUOM! Toissijaiset vaatimukset on *kursivoitu*
@@ -16,10 +16,11 @@ HUOM! Toissijaiset vaatimukset on *kursivoitu*
 #### Yleiset:
 * Pelissä on oltavat vähintään yksi pelaaja
 * Pelissä voi olla monta pelaaja 
+* Peliä voi pelata yksin tai toisia pelaajia vastaan
 * *Pelissä voi olla tekoäly pelaajia*
 * *Tekoäly pelaajilla on vaikeustaso*
-* Pelissä voi valita pelattavan radan 
-* Peliin voi ottaa mukaan useampia ratoja
+* Pelaaja voi valita haluamansa radan
+* Pelaaja voi ottaa peliin mukaan useampia ratoja
 * Pelikierroksen aikana pidetään kirjaa lyöntien lukumäärästä
 * *Pelissä pidetään kirjaa ennätyspisteitä eli ns. high scoreista*
 
@@ -77,7 +78,6 @@ HUOM! Toissijaiset vaatimukset on *kursivoitu*
 * Pelaaja suorittaa lyönnin 
 * Pelaaja keskeyttä pelin
 * Pelaaja lopettaa pelin
-
 
 ## 4. Jatkokehitys: 
 * Tänne tulee kommentteja, ideoita ja suunnitelmia pelin jatkokehitystä varten 
