@@ -1,17 +1,13 @@
-#Mingolf -peli :golf: 
+#Mingolf-peli :golf: 
 Ohjelmoinnin harjoitustyö, kesä 2015
-Jesper Ruuth
 
-**Kuvaus:** 
-Kaksiulotteinen minigolf simulaatio. Pelin idana on että pelaaja yrittää löydä tai "putata" pallon mahdollisimman vähillä lyönneillä reikään. 
-Peliä pelaatan oikean minigolfin tavoin radoilla, jotka ovat muodoiltaan vaihtelevia. Ratoja ympäröi seinät ja radoilla voi olla erilaisia 
-esteitä pelin hankaloittamiseksi. Pelikierros aloitetaan radan aloituspaikalta ja jatketaan siitä mihin edellinen lyönti päättyi. 
-Pelikierros päättyy kun pallo pelataan reikään tai jos lyöntejä on käytetty kuusi.
+**Kuvaus:**
 
-Peliä ohjataan näppäimistöllä, jossa jokaista lyöntiä varten määritetään lyönnin suunta sekä voima. Lisäominaisuutena lyönnille voi määrittää
-myös ylä- tai alakierteen. Lyönti vaikuttaa pallon liikkeeseen joka määrittää miten pallo radalla etenee ja mihin kohtaa radalla pallon 
-liike lopulta pysähtyy. Edetessään, pallo voi törmätä esteisiin, jotka vaikuttavat myös pallon liikeen jatkoon.  Lisäominaisuutena radan 
-pinnanmuodot voivat vaikuttaa pallon liikkeeseen. Pallon liike ja käyttäytyminen noudatta jossain määrin simuloituja fysiikan ja liikkeen lakeja.
+Kaksiulotteinen minigolf simulaatio. Pelin idana on että pelaaja yrittää löydä tai "putata" pallon mahdollisimman vähillä lyönneillä reikään. Peliä pelaatan oikean minigolfin tavoin radoilla, jotka ovat muodoiltaan vaihtelevia. Ratoja ympäröi seinät ja radoilla voi olla erilaisia 
+esteitä pelin hankaloittamiseksi. Pelikierros aloitetaan radan aloituspaikalta ja jatketaan siitä mihin edellinen lyönti päättyi. Pelikierros päättyy kun pallo pelataan reikään tai jos lyöntejä on käytetty kuusi.
+
+Peliä ohjataan näppäimistöllä, jossa jokaista lyöntiä varten määritetään lyönnin suunta sekä voima. Lisäominaisuutena lyönnille voi määrittää myös ylä- tai alakierteen. Lyönti vaikuttaa pallon liikkeeseen joka määrittää miten pallo radalla etenee ja mihin kohtaa radalla pallon 
+liike lopulta pysähtyy. Edetessään, pallo voi törmätä esteisiin, jotka vaikuttavat myös pallon liikeen jatkoon.  Lisäominaisuutena radan pinnanmuodot voivat vaikuttaa pallon liikkeeseen. Pallon liike ja käyttäytyminen noudatta jossain määrin simuloituja fysiikan ja liikkeen lakeja.
 
 Peli tulee olemaan kaksiulotteinen, joka on kuvattu pystysuoraan ylhäältä päin. Peliä voi pelata yksin tai kaveria vastaan ns. moninpelinä.
 
