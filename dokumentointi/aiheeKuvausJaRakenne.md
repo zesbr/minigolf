@@ -78,6 +78,3 @@ HUOM! Toissijaiset vaatimukset on *kursivoitu*
 * Pelaaja suorittaa lyönnin 
 * Pelaaja keskeyttä pelin
 * Pelaaja lopettaa pelin
-
-## 4. Jatkokehitys: 
-* Tänne tulee kommentteja, ideoita ja suunnitelmia pelin jatkokehitystä varten 
