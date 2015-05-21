@@ -1,14 +1,12 @@
-package com.minigolf.domain;
+package minigolf.domain;
 
-import java.awt.Color;
-import java.awt.Graphics;
 
 
 public class Hole {
 
     private int x;
     private int y;
-    
+
     public Hole(int x, int y) {
         this.x = x;
         this.y = y;
@@ -21,10 +19,13 @@ public class Hole {
     public int getY() {
         return y;
     }
-    
-    public void paint(Graphics g) {
-        g.setColor(Color.BLACK);
-        g.fillOval(x, y, 20, 20);
+
+    public void setX(int x) {
+        this.x = x;
     }
-     
+
+    public void setY(int y) {
+        this.y = y;
+    }
+         
 }
