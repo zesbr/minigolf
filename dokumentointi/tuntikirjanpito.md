@@ -2,35 +2,41 @@
 
 ### Tiistai 12.5.2015
 
-* Projektin luominen sekä Githubin, Mavenin ja PIT:n conffaus
-* Aiheen kuvauksen, alustavien vaatimusten sekä käyttötapausten kirjaaminen
+* Työympäristön ja projektin alustus 
+* Githubin, Mavenin ja PIT:n conffaus
+* Aiheen suunnittelu
+* Aihekuvausen dokumetointi
+* Alustavien vaatimusten dokumentointi
+* Käyttötapausten kirjaaminen
 * Labtoolin conffaus ja tehtävien kirjaus 
 
 **Kesto:** 4h
 
 ### Tiisti 19.5.2015
 
-* Arkkitehtuurin suunnitelu
-* Luokkakaavion piirtäminen
+* Sovellusrkkitehtuurin suunnitelu
+* Luokkakaavion piirtely
 * Alustavan sovelluslogiikan toteuttaminen
 
 **Kesto:** 6h
 
 ### Keskiviikko 20.5.2015
 
-* Arkkitehtuurin suunnitelu
+* Sovellusarkkitehtuurin suunnitelu
+* Luokkakaavioiden piirtely
 * Testikäyttöliittymän toteutus
-* Toiminnallisuus pallon lyömiselle
-* Refaktorointia ja sovelluslogiikan tekemistä
+* Sovelluslogiikan tekeminen
+* Koodin refaktorointi
 
-** Kesto: 10h
+**Kesto:** 10h
 
 ### Torstai
 
-* Arkkitehtuurin suunnitelu
-* Luokkakaavion piirtäminen
+* Sovellusrkkitehtuurin suunnitelu
+* Luokkakaavion piirttely
 * Muut dokumentointi tehtävät
-* Refaktorointia ja sovelluslogiikan tekemistä
+* Sovelluslogiikan tekeminen
+* Koodin refaktorointi
 * JUnit yksikkötestien tekeminen
 
-** Kesto:** 10h
+**Kesto:** 10h
