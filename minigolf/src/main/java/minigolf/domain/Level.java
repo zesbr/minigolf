@@ -1,7 +1,5 @@
 package minigolf.domain;
 
-
-
 import java.util.ArrayList;
 
 public class Level {
@@ -85,6 +83,35 @@ public class Level {
             return true;
         }
         return false;
+    }
+    
+    /**
+     * Rakentaa pelialueelle reunat alueen koordinaattin ja koon perusteella.
+     */
+    public void setWalls() {
+        
+        // Määritetään seinien paksuus ja koordinaatit muuuttujiien
+        int wallThickness = 20; // TODO: Aseta kentän attribuutiksi
+        int topLeftX = x;
+        int topLeftY = y;
+        int topRightX = x + width - wallThickness;
+        int topRightY = 0;
+        int bottomLeftX = 0;
+        int bottomLeftY = 0 + height - wallThickness;
+        int bottomRightX = x + width + wallThickness;
+        int bottomRightY = y + height;
+        
+        // Rakentaa yläreunan
+        addObstacle(new Obstacle(topLeftX, topLeftY, width, wallThickness));
+
+        // Rakentaa alareunan
+        addObstacle(new Obstacle(bottomLeftX, bottomLeftY, width, wallThickness));
+        
+        // Rakentaa vasemman reunan
+        addObstacle(new Obstacle(topLeftX, (topLeftY + wallThickness), wallThickness, (height - (2 * wallThickness))));
+        
+        // Asettaa oikean reunan
+        addObstacle(new Obstacle(topRightX, (topRightY + wallThickness), wallThickness, (height - (2 * wallThickness))));
     }
     
 }

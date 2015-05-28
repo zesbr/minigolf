@@ -1,56 +1,45 @@
-
 package minigolf.gui;
 
-import minigolf.App;
-import java.awt.*;
-import javax.swing.*;
+import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
+/**
+ * Sovelluksen alkuvalikko, jonka tehtävänä on luoda alkuvalikon käyttöliittymä 
+ * ja komponentit.
+ * @author zesbr
+ */
 public class StartMenu extends JPanel {
     
-    private App app;
+    private ActionListener handler;
+    private BoxLayout layout;
     
-    public StartMenu(App app) {
+    public StartMenu(ActionListener handler) {       
+        super();  
+        this.handler = handler;
+        this.layout = new BoxLayout(this, BoxLayout.Y_AXIS);
         
-        super();
-        this.app = app;
-        initialize();
-        addComponents();
-        
+        init();
+        addComponents();    
     }
     
-    private void initialize() {
-        
-        // TODO: Aseta valikolle taustakuva
-        // 
-        
-        // Asettaa valikon layoutiksi BoxLayout:n
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
+    private void init() {
+        setLayout(layout);   
     }
     
     private void addComponents() {
-        
-        // TODO:Luo valikon otsikkokomponentti
-        // 
-        
-        // Luodaan uudet painikekomponentit
-        JButton newGame = new JButton("New Game");
+        JButton game = new JButton("New Game");
         JButton tutorial = new JButton("Tutorial");
         JButton quit = new JButton("Quit");
         
-        // TODO: Määritä komponenttien fontti
-        // 
-        
-        // Lisätään tapahtumakuuntelijat painikkeille
-        newGame.addActionListener(app);
-        tutorial.addActionListener(app);
-        quit.addActionListener(app);
+        game.addActionListener(handler);
+        tutorial.addActionListener(handler);
+        quit.addActionListener(handler);
        
-        // Lisää komponentit valikkoon
-        add(newGame);
+        add(game);
         add(tutorial);
-        add(quit);
-          
+        add(quit);   
     }
 
 }

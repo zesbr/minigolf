@@ -1,62 +1,71 @@
 package minigolf.gui;
 
-import minigolf.game.Game;
-import java.awt.*;
-import javax.swing.*;
-import minigolf.domain.Player;
+import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.util.EventListener;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeListener;
 
+/**
+ * Pelialustalle kuuluvat graafinen käyttöliittymäpaneeli, jonka tehtävänä
+ * on huolehtia käyttöliittymäkomponenttien luomisesta ja alustamisesta. 
+ * @author jesruuth
+ */
 public class GUI extends JPanel {
     
-    private final int POWER_MIN = 1;
+    private final int POWER_MIN = 0;
     private final int POWER_MAX = 100;
-    private final int POWER_INIT = 25;
+    private final int POWER_INIT = 50;
     
     private final int ANGLE_MIN = -180;
     private final int ANGLE_MAX = 180;
-    private final int ANGLE_INIT = 90;
+    private final int ANGLE_INIT = 45;
     
-    private Player player;
-    private GameCanvas canvas;
+    private GameCanvas canvas; 
+    private GridLayout layout;
+    private EventListener handler;
     
-    public GUI(Player player,GameCanvas canvas) {
-        
+    public GUI(GameCanvas canvas) {
         super();
-        this.player = player;
         this.canvas = canvas;
+        this.layout = new GridLayout(3,2);
+        this.handler = new GameInputManager(canvas, POWER_INIT, ANGLE_INIT);
+        
         init();
         addComponents();
-        
     }
     
     private void init() {
-        
-        setLayout(new GridLayout(3,2));
-        setOpaque(false);
-        
+        setLayout(layout);
+        setOpaque(false);  
     }
     
-    private void addComponents() {   
-        
+    private void addComponents() {      
         JSlider powerInput = new JSlider(POWER_MIN, POWER_MAX, POWER_INIT);
         JSlider angleInput = new JSlider(ANGLE_MIN, ANGLE_MAX, ANGLE_INIT);
-        
         JButton putButton = new JButton("Put!");
         
         powerInput.setOpaque(false);
         angleInput.setOpaque(false);
         
-        Putter putter = new Putter(player, powerInput, angleInput, canvas);
-        
-        //PutPower power = new PutPower(forceInput, put);
-        //PutAngle angle = new PutAngle(angleInput, put);
-        
-        putButton.addActionListener(putter);
+        powerInput.setName("Power Input");
+        angleInput.setName("Angle Input");
+
+        // Lisää muutos- ja tapahtukuuntelijat käyttöliittymän komponenteille
+        powerInput.addChangeListener((ChangeListener) handler);
+        angleInput.addChangeListener((ChangeListener) handler);
+        putButton.addActionListener((ActionListener) handler);
         
         add(new JLabel("Power:"));
         add(powerInput);
+        
         add(new JLabel("Angle:"));
         add(angleInput);
-        add(putButton);
+        
+        add("Put Button", putButton);
     }
     
 }

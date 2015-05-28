@@ -1,88 +1,51 @@
-
 package minigolf;
 
-import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-import minigolf.game.Game;
-import minigolf.gui.StartMenu;
-import minigolf.gui.GameCanvas;
+import minigolf.gui.ViewManager;
 
-public class App extends JFrame implements ActionListener {
+/**
+ * Ohjelman ikkunakehyksestä ja alustustoimenpiteistä huolehtiva luokka. Luokan tehtävänä on luoda ja alustaa 
+ * uusi sovellusikkuna sekä sovellusikkunan näkymähallitsija ViewManager.
+ * @author zesbr
+ */
+public class App implements Runnable {
       
-    private final int FRAME_WIDTH = 800;
-    private final int FRAME_HEIGHT = 600;
-    private final String FRAME_TITLE = "Minigolf";
-    private final boolean FRAME_RESIZABLE = false;
+    private final int WIDTH = 800;
+    private final int HEIGHT = 600;
+    private final String TITLE = "Minigolf";
+    private final boolean RESIZABLE = false;
     
-    private JPanel basePanel;
+    private JFrame frame;
+    private ViewManager manager;
     
     public App() {
-        
-        super();
-        basePanel = new JPanel();
-        initialize();
-        launch();
-        
-    }
-   
-    public static void main(String[] args) {
-        
-        App app = new App();
-        app.run();
-        
+
     }
     
-    private void initialize() { 
+    private void init() { 
+        frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        frame.setTitle(TITLE);
+        frame.setResizable(RESIZABLE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); 
         
-        setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
-        setTitle(FRAME_TITLE);
-        setResizable(FRAME_RESIZABLE);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        
-        basePanel.setLayout(new CardLayout());
-        
-        getContentPane().add(basePanel);
-        
+        frame.getContentPane().add(manager);
     }
     
-    private void launch() {  
-        
-        basePanel.add("STARTMENU", new StartMenu(this)); 
-        CardLayout layout = (CardLayout) basePanel.getLayout();
-        layout.show(basePanel, "STARTMENU");
-        
-    }
-    
-    private void launch(Game game) {
-        
-        basePanel.add("GAME", new GameCanvas(game));
-        CardLayout layout = (CardLayout) basePanel.getLayout();
-        layout.show(basePanel, "GAME");
-        
-    }
-    
-    public void run() { 
-        
-        pack();
-        setVisible(true);
-        
-    }
-    
+    /**
+     * Ohjelamn ajava metodi, josta luodaan uusi JFrame ja ViewManger,
+     * kutsutaan alustusmetodia (init) sekä lopuksi pakataan komponentit.
+     */
     @Override
-    public void actionPerformed(ActionEvent ae) {
-   
-        if (ae.getActionCommand().equals("New Game")) {
-            
-            // Käynnistää uuden pelin
-            launch(new Game());
-            
-        }
+    public void run() {
+        frame = new JFrame();
+        manager = new ViewManager(this);
         
+        init();
+        
+        frame.pack();
+        frame.setVisible(true);
     }
     
 }

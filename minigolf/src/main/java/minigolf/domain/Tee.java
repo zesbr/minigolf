@@ -1,31 +1,9 @@
 package minigolf.domain;
 
-
-
-public class Tee {
+public class Tee extends LevelObject {
     
-    private int x;
-    private int y;
-
     public Tee(int x, int y) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-    
 }

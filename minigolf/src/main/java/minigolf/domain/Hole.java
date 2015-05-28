@@ -1,31 +1,20 @@
 package minigolf.domain;
 
-
-
-public class Hole {
-
-    private int x;
-    private int y;
-
+public class Hole extends LevelObject {
+    
+    private final int RADIUS = 20;
+    private final int DIAMETER = RADIUS * 2;
+    
     public Hole(int x, int y) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
     }
 
-    public int getX() {
-        return x;
+    public int getRADIUS() {
+        return RADIUS;
     }
 
-    public int getY() {
-        return y;
+    public int getDIAMETER() {
+        return DIAMETER;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-         
 }
