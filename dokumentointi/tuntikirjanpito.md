@@ -30,7 +30,7 @@
 
 **Kesto:** 10h
 
-### Torstai
+### Torstai 21.5
 
 * Sovellusrkkitehtuurin suunnitelu
 * Luokkakaavion piirttely
@@ -40,3 +40,18 @@
 * JUnit yksikkötestien tekeminen
 
 **Kesto:** 10h
+
+### Keskiviikko 27.5
+
+* Sovelluslogiikan tekeminen
+* Koodin refaktorointi
+
+**Kesto:** 8h
+
+### Torstai 28.5
+
+* Sovelluslogiikan tekeminen
+* Koodin refaktorointi
+* JUnit yksikkötestien tekeminen
+
+** Kesto: 9h
