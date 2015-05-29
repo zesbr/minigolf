@@ -47,6 +47,15 @@ public class Ball implements BallPhysics {
         return DIAMETER;
     }
     
+    public int getCenterX() {
+        return (int) x + RADIUS;
+        
+    }
+    
+    public int getCenterY() {
+        return (int) y + RADIUS;
+    }
+    
     public void setX(float x) {
         this.x = x;
     }
@@ -79,11 +88,11 @@ public class Ball implements BallPhysics {
      * Liikuttaa palloa yhdellä siirrolla määritettyyn suuntaan.
      */
     public void move() {
-        
         float x = (float) (getX() + Math.cos(1.0 * Math.toRadians(angle)));
         float y = (float) (getY() - Math.sin(1.0 * Math.toRadians(angle))); 
         setX(x);
         setY(y);   
+        
         speed -= 3;
     }
 

@@ -10,21 +10,34 @@ public class Obstacle extends LevelObject {
         this.width = width;
         this.height = height;
     }
-
+    
+    /**
+     * Palauttaa esteen leveyden
+     * @return int : esteen leveys
+     */
     public int getWidth() {
         return width;
     }
     
+    /**
+     * Palauttaa esteen korkeuden
+     * @return int : esteen korkeus
+     */
     public int getHeight() {
         return height;
     }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
     
-    public void setHeight(int height) {
-        this.height = height;
+    /**
+     * Tarkistaa onko koordinaatti esteen rajojen sisällä ja palauttaa totuusarvon
+     * @param x : x-koordinaatti
+     * @param y : y-koordinaatti
+     * @return boolean : true jos on false jos ei
+     */
+    public boolean inside(int x, int y) {
+        if (x < getX() || x > (getX() + this.width) || y < getY() || y > (getY() + this.height)) {
+            return false;
+        }
+        return true;
     }
     
 }

@@ -72,9 +72,38 @@ public class HoleTest {
     }
     
     @Test
-    public void holeCannotBeConstuctedWithCoordinatesThatAreOutsideOfLevelBorders() {
-        // TODO: Kuuluuko tämä testi LevelTest luokkaan?
+    public void holeRadiusIsTwenty() {
+        int radius = hole.getRadius();
+        
+        assertEquals(20, radius);
     }
     
+    @Test
+    public void holeDiameterIsForty() {
+        int diameter = hole.getDiameter();
+        
+        assertEquals(40, diameter);
+    }
+    
+    @Test
+    public void holeCenterIsCorrect() {
+        int centerX = hole.getCenterX();
+        int centerY = hole.getCenterY();
+        
+        assertEquals(120, centerX);
+        assertEquals(120, centerY);
+        
+    }
 
+    @Test
+    public void checkingIfCoordinateIsInsideHoleWorks() {
+        assertEquals(true, hole.inside(120, 120));
+        assertEquals(false, hole.inside(200, 200));
+    }
+    
+    @Test
+    public void checkingIfCoordinateIsWithInRadius() {
+        assertEquals(true, hole.withinRadius(120, 120, 20));
+        assertEquals(false, hole.withinRadius(200, 200, 79));
+    }
 }

@@ -143,7 +143,7 @@ public class GameCanvas extends JPanel implements ActionListener {
     public void paint(Graphics2D g, Hole hole) {
         int x = hole.getX();
         int y = hole.getY();
-        int diameter = hole.getDIAMETER();
+        int diameter = hole.getDiameter();
         
         g.setColor(Color.BLACK);
         g.fillOval(x, y, diameter, diameter);
@@ -220,6 +220,9 @@ public class GameCanvas extends JPanel implements ActionListener {
             } else {
                 ball.move();
             }
+            
+            fps += 0.05;
+            timer.setDelay((int) fps);
             // Hidastetaan ajastinta
             if (ball.getSpeed() < 200) {
                 fps += 0.3;

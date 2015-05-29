@@ -33,8 +33,8 @@ public class BallTest {
         float x = ball.getX();
         float y = ball.getY();
         
-        assertEquals(10, x);
-        assertEquals(10, y);
+        assertEquals(10, x, 0.0);
+        assertEquals(10, y, 0.0);
     }
     
     @Test
@@ -45,8 +45,8 @@ public class BallTest {
         float x = ball.getX();
         float y = ball.getY();
         
-        assertEquals(20, x);
-        assertEquals(20, y);
+        assertEquals(20, x, 0.0);
+        assertEquals(20, y, 0.0);
     }
     
     @Test
@@ -57,20 +57,20 @@ public class BallTest {
         float x = ball.getX();
         float y = ball.getY();
         
-        assertEquals(Integer.MIN_VALUE, x);
-        assertEquals(Integer.MIN_VALUE, y);
+        assertEquals(Integer.MIN_VALUE, x, 0.0);
+        assertEquals(Integer.MIN_VALUE, y, 0.0);
     }
     
     @Test
     public void allowsCoordinatesThatExceedScreenSpace() { 
-        ball.setX(Integer.MAX_VALUE);
-        ball.setY(Integer.MAX_VALUE);
+        ball.setX(10000);
+        ball.setY(10000);
         
         float x = ball.getX();
         float y = ball.getY();
         
-        assertEquals(Integer.MAX_VALUE, x);
-        assertEquals(Integer.MAX_VALUE, y);
+        assertEquals(10000, x, 0.0);
+        assertEquals(10000, y, 0.0);
     }
     
     @Test
@@ -109,7 +109,7 @@ public class BallTest {
         ball.setSpeed(Double.MAX_VALUE);
         double speed = ball.getSpeed();
         
-        assertEquals(999.99, speed, 0.0);
+        assertEquals(1000, speed, 0.0);
     }
     
     @Test
@@ -135,4 +135,29 @@ public class BallTest {
         
         assertEquals(0.0, angle, 0.0);
     }
+    
+    @Test
+    public void ballRadiusIsTen() { 
+        int radius = ball.getRadius();
+        
+        assertEquals(10, radius);
+    }
+    
+    @Test
+    public void ballDiameterIsTwenty() { 
+        int diameter = ball.getDiameter();
+        
+        assertEquals(20, diameter, 0.0);
+    }
+    
+    @Test
+    public void ballCenterIsCorrect() {
+        int centerX = ball.getCenterX();
+        int centerY = ball.getCenterY();
+        
+        assertEquals(20, centerX);
+        assertEquals(20, centerY);
+        
+    }
+
 }

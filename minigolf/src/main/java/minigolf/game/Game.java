@@ -121,16 +121,9 @@ public class Game {
         System.out.println("Ennen löyntiä pallo on kohdassa: [" +
                 (int) ball.getX() + ", " + (int) ball.getY() + "]");
         
-        int delay = 0;
-        int limit = 20;
-        for (int i = 20; i >= 0; i-=2) {
-            if (power < limit) {
-                delay = i;
-                break;
-            }
-            limit += 100;
-        }
-        //canvas.setTimerDelay(delay);
+        // int delay = (int) (power * -1) + 1000;
+        
+        // canvas.setTimerDelay((int) delay/10);
         canvas.startTimer();
     }
     
@@ -142,16 +135,10 @@ public class Game {
     public boolean ballIsInHole(Ball ball) {
         Level level = getCurrentLevel();
         Hole hole = level.getHole();
-        
-        int holeCenterX = hole.getX() + hole.getRADIUS();
-        int holeCenterY = hole.getY() + hole.getRADIUS();
-        
-        int ballCenterX = (int) ball.getX() + ball.getRadius();
-        int ballCenterY = (int) ball.getY() + ball.getRadius();
-        
-        if (Math.pow(ballCenterX - holeCenterX, 2) + Math.pow(ballCenterY - holeCenterY, 2) < Math.pow(hole.getRADIUS(), 2)) {
+
+        if (hole.inside(ball.getCenterX(), ball.getCenterY())) {
             
-            if (ball.getSpeed() < 100) {
+            if (ball.getSpeed() < 200) {
                 System.out.println("Pallo on reiässä! Hienoa!");
                 ball.setSpeed(0);
                 ball.setX(level.getTee().getX());

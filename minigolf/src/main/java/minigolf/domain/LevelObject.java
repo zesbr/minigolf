@@ -6,8 +6,17 @@ public abstract class LevelObject implements CollisionManager {
     private int y;
     
     public LevelObject(int x, int y) {
-        this.x = x;
-        this.y = y;
+        if (x < 0) {
+            this.x = 0;
+        } else {
+            this.x = x;
+        }
+        
+        if (y < 0) {
+            this.y = 0;
+        } else {
+            this.y = y;
+        }
     }
 
     public int getX() {
@@ -17,18 +26,21 @@ public abstract class LevelObject implements CollisionManager {
     public int getY() {
         return y;
     }
-
+     
     public void setX(int x) {
-        this.x = x;
+        if (x < 0) {
+            this.x = 0;
+        } else {
+            this.x = x;
+        }
     }
 
     public void setY(int y) {
-        this.y = y;
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass() + "{" + "x=" + x + ", y=" + y + "}";
+        if (y < 0) {
+            this.y = 0;
+        } else {
+            this.y = y;
+        }
     }
      
 }
