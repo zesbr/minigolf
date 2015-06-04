@@ -1,5 +1,10 @@
 package minigolf.domain;
 
+/**
+ * Pelikentän estettä mallintava luokka, jonka tehtävä on huolehtia esteen
+ * ulottuvuuksista sekä esteeseen törmäyksen tunnistamisesta
+ * @author zesbr
+ */
 public class Obstacle extends LevelObject {
     
     private int width;
@@ -29,7 +34,7 @@ public class Obstacle extends LevelObject {
     
     /**
      * Palauttaa esteen ylälaidan y-koordinaatin
-     * @return y-koordinaatti
+     * @return ylälaidan y-koordinaatti
      */
     public int getTopSideY() {
         return getY();
@@ -37,7 +42,7 @@ public class Obstacle extends LevelObject {
     
     /**
      * Palauttaa esteen oikean laidan x-koordinaatin
-     * @return x-koordinaatti
+     * @return oikean laidan x-koordinaatti
      */
     public int getRightSideX() {
         return getX() + getWidth();
@@ -45,7 +50,7 @@ public class Obstacle extends LevelObject {
     
     /**
      * Palauttaa esteen alalaidan y-koordinaatin
-     * @return y-koordinaatti
+     * @return alalaidan y-koordinaatti
      */
     public int getBottomSideY() {
         return getY() + getHeight();
@@ -53,18 +58,10 @@ public class Obstacle extends LevelObject {
     
     /**
      * Palauttaa esteen vasemman laidan x-koordinaatin
-     * @return x-koordinaatti
+     * @return vasemman laidan x-koordinaatti
      */
     public int getLeftSideX() {
         return getX();
-    }
-    
-    /**
-     * Palauttaa esteen vasemman alakulman y-koordinaatin
-     * @return esteen vasemman alakulman y-koordinaatti
-     */
-    public int getBottomLeftY() {
-         return getBottomSideY();
     }
     
     /**
@@ -81,15 +78,14 @@ public class Obstacle extends LevelObject {
     }
     
     /**
-     * Tarkistaa osuuko pallo esteeseen ja jos osuu, niin laskee kimmokkeen 
-     * aiheuttauman uuden kulman pallolle sekä palauttaa totuusarvon true. 
-     * Jos pallo ei osu, niin palauttaa false.
+     * Tarkistaa osuuko pallo esteeseen ja kutsuu palloa päivittämään törmäyksen 
+     * aiheuttaman muutoksen pallon liikerataan, sekä palauttaa totuusarvon
      * @param ball : pallo
      * @return totuusarvo, osuuko pallo esteeseen (true) vai ei (false)
      */ 
     public boolean hits(Ball ball) {
+        // Tarkistaa osuuko pallo esteen laitoihin tai jos ei osu, niin osuuko sen kulmiin
         if (hitsSides(ball)) {
-            System.out.println("osuma");
             return true;
         } else if (hitsCorners(ball)) {
             return true;
@@ -97,8 +93,12 @@ public class Obstacle extends LevelObject {
         return false;
     }
     
-    // Tarkistaa osuuko pallo esteen laitoihin ja kutsuu pallon kulman pöivitymistä
-    private boolean hitsSides(Ball ball) {
+    /**
+     * Tarkistaa osuuko pallo esteen laitoihin ja palauttaa totuusarvon
+     * @param ball : pallo
+     * @return totuusarvo, osuuko pallo esteen laitoihin (true) vai ei (false)
+     */
+    public boolean hitsSides(Ball ball) {
         boolean hits = false;
         if (hitsTopsSide(ball.getBottomX(), ball.getBottomY())) {
             ball.calculateAngleFromVerticalCollision();
@@ -119,8 +119,12 @@ public class Obstacle extends LevelObject {
         return hits;
     }
     
-    // Tarkistaa osuuko pallo esteen kulmiin
-    private boolean hitsCorners(Ball ball) { 
+    /**
+     * Tarkistaa osuuko pallo esteen kulmiin ja palauttaa totuusarvon
+     * @param ball : pallo
+     * @return totuusarvo, osuuko pallo kulmaan (true) vai ei (false)
+     */
+    public boolean hitsCorners(Ball ball) { 
         // Tarkistaa osuuko pallo esteen vasempaan yläkulmaan
         if (hitsTopLeftCorner(ball)) {
             ball.calculateAngleFromCornerCollision(getLeftSideX(), getTopSideY());

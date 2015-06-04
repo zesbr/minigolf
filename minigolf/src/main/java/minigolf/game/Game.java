@@ -8,7 +8,9 @@ import java.util.ArrayDeque;
 import minigolf.domain.LevelArchitect;
 
 /**
- * 
+ * Pelikierrosta hallinnoiva luokka, jonka tehtävä on huolehtia pelikierroksen
+ * alustamisesta, sekä pelikierroksen aikana tapahtuvista muutoksista kuten kentän
+ * ja pelivuoron vaihdoista
  * @author zesbr
  */
 public class Game {
@@ -23,27 +25,19 @@ public class Game {
         init();
     }
     
-    /**
-     * Lisää pelaajat ja kentät, sekä asettaa pelaajien pallot aloituspaikalle.
-     */
+    // Lisää pelaajat ja kentät, sekä asettaa pelaajien pallot aloituspaikalle.
     private void init() {
         addPlayers();
         addLevels();
         placeBallsToTee(getCurrentLevel().getTee()); 
     }
     
-    public void start() {
-        
-    }
-    
-    public void startNewRound() {
-        
-    }
-    
     // Lisää pelaajat
     private void addPlayers() {   
         Player p1 = new Player("P1");
+        Player p2 = new Player("P2");
         players.add(p1);        
+        //players.add(p2);
     }
     
     // Lisää kentät
@@ -53,6 +47,8 @@ public class Game {
         levels.add(LevelArchitect.buildLevel(2));
         levels.add(LevelArchitect.buildLevel(3));
         levels.add(LevelArchitect.buildLevel(4));
+        levels.add(LevelArchitect.buildLevel(5));
+        levels.add(LevelArchitect.buildLevel(6));
     }
     
     /**
@@ -66,33 +62,35 @@ public class Game {
     }
     
     /**
-     * TODO
-     * @return 
+     * Palauttaa nykyisen kentän eli sen jota parhaillaan pelataan
+     * @return nykyinen kenttä
      */
     public Level getCurrentLevel() {
         return levels.peekFirst();
     }
     
     /**
-     * Vaihtaa jonon edessä olevaa pelaaja. Ensimmäinen pelaaja menee viimeiseksi.
+     * Kierrättää tai vaihtaa aktiivisen pelaajan ja palauttaa seuraavan 
+     * vuorossa olevan pelaajan
+     * @return seuraava pelaaja 
      */
-    public void switchPlayer() {
+    public Player switchPlayer() {
         Player previous = players.pollFirst();
         players.add(previous);
+        return getActivePlayer();
     }
     
     /**
-     * Palauttaa aktiivisen pelaajan
-     * @return pelaaja
+     * Palauttaa aktiivisen pelaajan eli sen kenen vuoro parhaillaan on
+     * @return aktiivinen pelaaja
      */
     public Player getActivePlayer() {
         return players.peekFirst();
     }
 
-    
     /**
-     * Alustaa jokaisen pelaajan pallot aloituspaikalle.
-     * @param tee
+     * Alustaa jokaisen pelaajan pallot kentän aloituspaikalle.
+     * @param tee : kentän aloituspaikka
      */
     public void placeBallsToTee(Tee tee) {
         for (Player player : players) {

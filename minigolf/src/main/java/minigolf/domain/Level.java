@@ -3,9 +3,9 @@ package minigolf.domain;
 import java.util.ArrayList;
 
 /**
- * Pelialuetta mallintava luokka, joka vastaa pelialueen määrittämisestä, sekä
- * alustamista
- * @author jesruuth
+ * Pelialuetta mallintava luokka, joka vastaa pelialueen ja siihen kuuluvien
+ * objektien määrittämisestä
+ * @author zesbr
  */
 public class Level {
     
@@ -32,10 +32,8 @@ public class Level {
         }
         this.width = width;
         this.height = height;
-        // TODO: Validoi aloituspaikan sijainti
-        this.tee = tee;
-        // TODO: Validoi reiän sijainti
-        this.hole = hole;  
+        setTee(tee);
+        setHole(hole); 
         this.obstacles = new ArrayList<>();
         buildWalls();
     }
@@ -85,7 +83,7 @@ public class Level {
      * @param tee : aloituspaikka
      */
     public void setTee(Tee tee) {
-        if (!isOutOfBounds(tee.getX(), getY())) {
+        if (!isOutOfBounds(tee.getX(), tee.getY())) {
             if (hole != null) {
                 if (!hole.withinDistance(tee.getX(), tee.getY(), 200)) {
                     this.tee = tee;
@@ -128,10 +126,6 @@ public class Level {
         return obstacles;
     }
     
-    
-
-    
-
     /**
      * Lisää uuden esteen kentän estelistaan
      * @param obstacle : este
@@ -163,6 +157,7 @@ public class Level {
         if (hole.inHole(ball.getCenterX(), ball.getCenterY())) { 
             // Tarkistaa onko pallon nopeus liian suuri upotakseen reikään
             if (ball.getSpeed() < 300) { 
+                System.out.println("Pallo on reiässä!");
                 return true;
             }
         }
@@ -170,15 +165,14 @@ public class Level {
     }
     
     /**
-     * Tarkistaa osuuko pallo esteeseen ja jos osuu, niin laskee kimmokkeen 
-     * aiheuttauman uuden kulman pallolle sekä palauttaa totuusarvon true. 
-     * Jos pallo ei osu, niin palauttaa false.
-     * @param ball
-     * @return boolean : totuusarvo, että osuuko pallo esteeseen vai ei
+     * Tarkistaa osuuko pallo johonkin kentän esteeseen ja palauttaa totuusarvon
+     * @param ball : pallo
+     * @return totuusarvo, osuuko pallo esteeseen (true) vai ei (false)
      */
     public boolean ballHitsObstacle(Ball ball) {
         for (Obstacle obstacle : obstacles) {      
             if (obstacle.hits(ball)) {
+                System.out.println("TÖRMÄYS!");
                 return true;
             }
         }

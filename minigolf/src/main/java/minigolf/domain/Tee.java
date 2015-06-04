@@ -2,8 +2,7 @@ package minigolf.domain;
 
 /**
  * Kentän aloituslyöntipaikka eli ns. tii.
- * 
- * @author jesruuth
+ * @author zesbr
  */
 public class Tee extends LevelObject {
     

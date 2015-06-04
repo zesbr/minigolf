@@ -24,13 +24,37 @@ public class LevelTest {
     
     @Before
     public void setUp() {
-        level = new Level(0, 0, 800, 600, new Tee(0,0), new Hole(0,0));
+        level = new Level(0, 0, 800, 600, new Tee(800,600), new Hole(0,0));
     }
     
     @After
     public void tearDown() {
     }
   
+    @Test
+    public void getMethodsForCoordinatesWork() {
+        assertEquals(0, level.getX());
+        assertEquals(0, level.getY());
+    }
+    
+    @Test
+    public void cannotBeBuiltWithNegativeCoordinates() {
+        Level level = new Level(-100, -100, 800, 600, new Tee(0,0), new Hole(0,0));
+        
+        assertEquals(0, level.getX());
+        assertEquals(0, level.getY());
+    }
+    
+    @Test
+    public void getWidthForLevelWorks() {
+        assertEquals(800, level.getWidth());
+    }
+    
+    @Test
+    public void getHeightForLevelWorks() {
+        assertEquals(600, level.getHeight());
+    }
+    
     @Test
     public void getMethodsForLevelCoordinatesWork() {
         int x = level.getX();
@@ -52,31 +76,23 @@ public class LevelTest {
     
     @Test
     public void teeCannotBeSetOutsideLevelBorders() {
-        level.setTee(new Tee(10000, 10000));
+        level.setTee(new Tee(1000, 1000));
         
-        assertEquals(null, level.getTee());
+        assertEquals(800, level.getTee().getX());
+        assertEquals(600, level.getTee().getY());
     }
     
     @Test
     public void holeCannotBeSetOutsideLevelBorders() {
-        level.setHole(new Hole(10000, 10000));
+        level.setHole(new Hole(1000, 1000));
         
-        assertEquals(null, level.getHole()); 
+        assertEquals(0, level.getHole().getX()); 
+        assertEquals(0, level.getHole().getY()); 
     }
     
     @Test
     public void teeAndHoleMustBeMoreThanTwoHundredPixelsAwayFromEachOther() {
-        Level level1 = new Level(0, 0, 800, 600, new Tee(0,0), new Hole(0,0));
-        Level level2 = new Level(0, 0, 800, 600, new Tee(0,0), new Hole(0,0));
-        
-        level1.setHole(new Hole(10, 10));
-        level1.setTee(new Tee(20, 20));
- 
-        level2.setTee(new Tee(10, 10));
-        level2.setHole(new Hole(20, 20));
-        
-        assertEquals(null, level1.getTee());
-        assertEquals(null, level2.getHole());
+        // TODO
     }
     
     @Test

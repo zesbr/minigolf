@@ -51,6 +51,8 @@ public class GameInputManager implements ActionListener, ChangeListener {
         // Tarkistaa ettei pelialustan ajastin ole käynnissä
         if (!canvas.timerIsRunning()) {
             
+            System.out.println(player.getName() + " lyö palloa voimalla " + power + " ja kulmassa " + angle);
+            
             // Suorittaa putin aktiivisella pelaajalla
             player.put(power, angle);
             

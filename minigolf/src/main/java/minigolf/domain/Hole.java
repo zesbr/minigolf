@@ -1,5 +1,10 @@
 package minigolf.domain;
 
+/**
+ * Pelikentän reikää mallintava luokka jonka tehtävä on huolehtia reiän sijaintiin
+ * liittyvistä palveluista
+ * @author zesbr
+ */
 public class Hole extends LevelObject {
     
     private final int RADIUS = 15;
@@ -44,8 +49,8 @@ public class Hole extends LevelObject {
     
     /**
      * Tarkistaa onko piste reiän sisällä
-     * @param x : x-koordinaatti
-     * @param y : y-koordinaatti
+     * @param x : pisteen x-koordinaatti
+     * @param y : pisteen y-koordinaatti
      * @return totuusarvo onko piste reiän kehän sisäpuolellea (true) vai ulkopuolella (false)
      */
     public boolean inHole(int x, int y) {

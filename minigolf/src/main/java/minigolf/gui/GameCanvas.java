@@ -197,6 +197,7 @@ public class GameCanvas extends JPanel implements ActionListener {
     }
     
     /**
+     * TODO: Refaktoroi
      * Luokan ajastinta kuunteleva tapahtumakäsittelijä, jota kutsutaan pallon 
      * ollessa liikkeessä 60 kertaa sekunnissa
      * @param ae : ajastimen tapahtuma
@@ -214,25 +215,30 @@ public class GameCanvas extends JPanel implements ActionListener {
         } else {
             // Nollataan pallon liike
             ball.setSpeed(0);  
-            //
+            // Hakee nykyisen kentän ja tarkistaa oliko pallo reiässä
             Level level = game.getCurrentLevel();
             if (level.ballIsInHole(ball)) {
                 // TODO: Tässä tulisi tapahtua reikään uppoamisen ääniefekti
-                
-                // Tarkistaa ovatko kaikki pelaajat pelanneet reiän
-                
-                // 
-                game.switchLevel();
-                level = game.getCurrentLevel();
-                game.placeBallsToTee(level.getTee());
-
-                // Näyttää pelaajan tuloskortin
-                
+                // Kirjaa pelaajan tuloksen ja nollaa lyöntilaskurin
+                Player player = game.getActivePlayer();
+                System.out.println(player.getName() + " pelasi pallon reikään " + player.getStrikes() + " lyönnillä.");
+                player.addScore(level, player.getStrikes());
+                player.initStrikes();
+                // TODO: Näytä pelaajan tuloskortin
+                // Jäädytää kuvan kolmeksi sekunniksi
                 try {
                     Thread.sleep(3000l);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
+                // Vaihtaa pelaajan
+                player = game.switchPlayer(); 
+                // Tarkistaa onko pelaaja pelannut jo reiän
+                if (player.getScore(level) != -1) {
+                    level = game.switchLevel();
+                    game.placeBallsToTee(level.getTee());
+                }
+                // Piirrä alusta uudelleen
                 repaint();
             }
             // Pysäytettään ajastin lyönnin päätteeksi

@@ -13,7 +13,7 @@ import javax.swing.event.ChangeListener;
 /**
  * Pelialustalle kuuluvat graafinen käyttöliittymäpaneeli, jonka tehtävänä
  * on huolehtia käyttöliittymäkomponenttien luomisesta ja alustamisesta. 
- * @author jesruuth
+ * @author zesbr
  */
 public class GUI extends JPanel {
     

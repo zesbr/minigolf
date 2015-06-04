@@ -1,21 +1,17 @@
 package minigolf.domain;
 
+/**
+ * Abstrakti luokka, jonka pelikentän staattiset objektit perivät.
+ * @author zesbr
+ */
 public abstract class LevelObject {
     
     private int x;
     private int y;
     
     public LevelObject(int x, int y) {
-        if (x < 0) {
-            this.x = 0;
-        } else {
-            this.x = x;
-        }   
-        if (y < 0) {
-            this.y = 0;
-        } else {
-            this.y = y;
-        }
+        setX(x);
+        setY(y);
     }
     
     /**

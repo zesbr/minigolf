@@ -3,6 +3,11 @@ package minigolf.domain;
 import minigolf.game.Game;
 import minigolf.gui.GameCanvas;
 
+/**
+ * Dynaamista golfpalloa mallintava luokka, jonka tehtävä on huolehtia palloon 
+ * ja sen liikkeeseen liittyvien palveluiden laskennasta
+ * @author zesbr
+ */
 public class Ball {
     
     private float x;
@@ -61,11 +66,35 @@ public class Ball {
     }
     
     /**
+     * Asettaa pallolle uuden nopeuden
+     * @param speed : nopeus
+     */
+    public void setSpeed(double speed) {
+        if (speed > 1000) {
+            this.speed = 1000;
+        } else if (speed < 0) {
+            this.speed = 0;
+        } else {
+            this.speed = speed; 
+        }
+    }
+    
+    /**
      * Palauttaa pallon kulman
      * @return kulma
      */
     public double getAngle() {
         return angle;
+    }
+    
+    /**
+     * Asetta pallolle uuden kulman
+     * @param angle : kulma
+     */
+    public void setAngle(double angle) {
+        if (angle >= -180 && angle <= 180) {
+            this.angle = angle;
+        }
     }
     
     /**
@@ -86,7 +115,6 @@ public class Ball {
     
     /**
      * Palauttaa pallon keskipisteen x-koordinaatin
-     * 
      * @return keskipisteen x-koordinaatti
      */
     public int getCenterX() {
@@ -96,7 +124,6 @@ public class Ball {
     
     /**
      * Palauttaa pallon keskipisteen y-koordinaatin
-     * 
      * @return keskipisteen y-koordinaatti
      */
     public int getCenterY() {
@@ -105,8 +132,7 @@ public class Ball {
     
     /**
      * Palauttaa pallon yläreunan x-koordinaatin
-     * 
-     * @return pallon yläreunan x-koordinaatti
+     * @return yläreunan x-koordinaatti
      */
     public int getTopX() {
         return (int) x + RADIUS; 
@@ -114,8 +140,7 @@ public class Ball {
     
     /**
      * Palauttaa pallon yläreunan y-koordinaatin
-     * 
-     * @return pallon yläreunan y-koordinaatti
+     * @return yläreunan y-koordinaatti
      */
     public int getTopY() {
         return (int) y;
@@ -123,8 +148,7 @@ public class Ball {
     
     /**
      * Palauttaa pallon oikean reunan x-koordinaatin
-     * 
-     * @return x-koordinaatti
+     * @return oikean reunan x-koordinaatti
      */
     public int getRightX() {
         return (int) x + DIAMETER;
@@ -132,8 +156,7 @@ public class Ball {
     
     /**
      * Palauttaa pallon oikean reunan y-koordinaatin
-     * 
-     * @return y-koordinaatti
+     * @return oikean reunan y-koordinaatti
      */
     public int getRightY() {
         return (int) y + RADIUS;
@@ -141,8 +164,7 @@ public class Ball {
     
     /**
      * Palauttaa pallon alareunan x-koordinaatin
-     * 
-     * @return x-koordinaatti
+     * @return alareunan x-koordinaatti
      */
     public int getBottomX() {
          return (int) x + RADIUS;
@@ -150,8 +172,7 @@ public class Ball {
     
     /**
      * Palauttaa pallon alareunan y-koordinaatin
-     * 
-     * @return y-koordinaatti
+     * @return alareunan y-koordinaatti
      */
     public int getBottomY() {
          return (int) y + DIAMETER;
@@ -159,8 +180,7 @@ public class Ball {
     
     /**
      * Palauttaa pallon vasemman reunan x-koordinaatin
-     * 
-     * @return x-koordinaatti
+     * @return vasemman reunan x-koordinaatti
      */
     public int getLeftX() {
         return (int) x;
@@ -168,42 +188,15 @@ public class Ball {
     
     /**
      * Palauttaa pallon vasemman reunan y-koordinaatin
-     * 
-     * @return y-koordinaatti
+     * @return vasemman reunan y-koordinaatti
      */
     public int getLeftY() {
          return (int) y + RADIUS;
     }
     
     /**
-     * Asettaa pallolle uuden nopeuden
-     * 
-     * @param speed : pallon uusi nopeus
-     */
-    public void setSpeed(double speed) {
-        if (speed > 1000) {
-            this.speed = 1000;
-        } else if (speed < 0) {
-            this.speed = 0;
-        } else {
-            this.speed = speed; 
-        }
-    }
-    
-    /**
-     * Asetta pallolle uuden kulman
-     * 
-     * @param angle : pallon uusi kulma
-     */
-    public void setAngle(double angle) {
-        if (angle >= -180 && angle <= 180) {
-            this.angle = angle;
-        }
-    }
-    
-    /**
-     * Liikuttaa palloa yhdellä siirrolla määritettyyn suuntaan.
-     * @param canvas
+     * Liikuttaa palloa
+     * @param canvas : pelialusta
      */
     public void move(GameCanvas canvas) {
         // Haetaan pelialustan peli-instanssi
@@ -234,10 +227,11 @@ public class Ball {
     }
     
     /**
-     * 
-     * @param x
-     * @param y
-     * @return 
+     * Tarkistaa osuuko piste palloon eli onko se sen kehän sisällä ja 
+     * palauttaa totuusarvon
+     * @param x : pisteen x-koordinaatti
+     * @param y : pisteen y-koordinaatti
+     * @return totuusarvo, osuuko piste (true) vai ei (false)
      */
     public boolean hits(int x, int y) {
         if (Math.pow(x - getCenterX(), 2) + Math.pow(y - getCenterY(), 2) <= Math.pow(RADIUS, 2)) {
@@ -247,7 +241,9 @@ public class Ball {
     }
     
     /**
-     * Laskee ja asettaa pallolle uuden kulman vertikaalisen törmäyksen johdosta
+     * Laskee ja asettaa pallolle uuden kulman vertikaalisen törmäyksen johdosta.
+     * Tätä kutsutaan jos pallon yläreuna osuu esteen alalaitaan tai jos pallon
+     * alareuna osuu esteen ylälaitaan.
      */
     public void calculateAngleFromVerticalCollision() {
         angle = (angle * -1);
@@ -255,6 +251,8 @@ public class Ball {
     
     /**
      * Laskee ja asettaa pallolle uuden kulman horisontaalisen törmäyksen johdosta
+     * Tätä kutsutaan jos pallon vasen reuna osuu esteen oikeean laitaan tai jos
+     * pallon oikea reuna osuu esteen vasempaan laitaan.
      */
     public void calculateAngleFromHorizontalCollision() {
         if (angle > 90 && angle <= 180) {
@@ -265,8 +263,8 @@ public class Ball {
     }
     
     /**
-     * TODO: Tämä ei vielä laske oikein
-     * Laskee ja asettaa pallon uuden kulman kulmaan törmäämisen johdosta
+     * Laskee ja asettaa pallon uuden kulman esteen kulmaan törmäämisen johdosta
+     * TODO: Tämä ei laske vielä sinnepäinkään oikein
      * @param x : kulman x-koordinaatti
      * @param y : kulman y-koordinaatti
      */

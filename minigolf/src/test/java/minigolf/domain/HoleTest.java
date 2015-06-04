@@ -72,17 +72,17 @@ public class HoleTest {
     }
     
     @Test
-    public void holeRadiusIsTwenty() {
+    public void holeRadiusIsFifteen() {
         int radius = hole.getRadius();
         
-        assertEquals(20, radius);
+        assertEquals(15, radius);
     }
     
     @Test
-    public void holeDiameterIsForty() {
+    public void holeDiameterIsThirty() {
         int diameter = hole.getDiameter();
         
-        assertEquals(40, diameter);
+        assertEquals(30, diameter);
     }
     
     @Test
@@ -90,8 +90,8 @@ public class HoleTest {
         int centerX = hole.getCenterX();
         int centerY = hole.getCenterY();
         
-        assertEquals(120, centerX);
-        assertEquals(120, centerY);
+        assertEquals(115, centerX);
+        assertEquals(115, centerY);
         
     }
 
