@@ -6,6 +6,7 @@ import java.util.EventListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 
@@ -17,8 +18,8 @@ import javax.swing.event.ChangeListener;
 public class GUI extends JPanel {
     
     private final int POWER_MIN = 0;
-    private final int POWER_MAX = 100;
-    private final int POWER_INIT = 50;
+    private final int POWER_MAX = 1000;
+    private final int POWER_INIT = 500;
     
     private final int ANGLE_MIN = -180;
     private final int ANGLE_MAX = 180;
@@ -43,7 +44,11 @@ public class GUI extends JPanel {
         setOpaque(false);  
     }
     
-    private void addComponents() {      
+    private void addComponents() {    
+        
+        
+        JProgressBar powerBar = new JProgressBar(JProgressBar.VERTICAL, 1, 1000);
+        
         JSlider powerInput = new JSlider(POWER_MIN, POWER_MAX, POWER_INIT);
         JSlider angleInput = new JSlider(ANGLE_MIN, ANGLE_MAX, ANGLE_INIT);
         JButton putButton = new JButton("Put!");
@@ -58,6 +63,11 @@ public class GUI extends JPanel {
         powerInput.addChangeListener((ChangeListener) handler);
         angleInput.addChangeListener((ChangeListener) handler);
         putButton.addActionListener((ActionListener) handler);
+       
+        
+        powerBar.setAlignmentX(TOP_ALIGNMENT);
+        powerBar.setSize(10, 200);
+        //add(powerBar);
         
         add(new JLabel("Power:"));
         add(powerInput);

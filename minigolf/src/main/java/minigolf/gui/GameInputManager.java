@@ -5,11 +5,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import minigolf.game.Game;
+import minigolf.domain.Player;
 
 /**
  * Käyttäjän pelinaikana tekemien syötteiden tapahtumakuuntelija. Tästä luokasta 
  * aloitetaan mm. uuden putin suorittamiseen tarvittava toimenpideketju.
+ * 
  * @author zesbr
  */
 public class GameInputManager implements ActionListener, ChangeListener {
@@ -20,10 +21,14 @@ public class GameInputManager implements ActionListener, ChangeListener {
     
     public GameInputManager(GameCanvas canvas, int power, int angle) {
         this.canvas = canvas;
-        this.power = power * 10;
+        this.power = power;
         this.angle = angle;
     }
     
+    /**
+     * Asettaa 
+     * @param power 
+     */
     public void setPower(int power) {
         this.power = (double) power;
     }
@@ -35,18 +40,25 @@ public class GameInputManager implements ActionListener, ChangeListener {
     /**
      * Puttaus painikkeen tapahtumakuuntelija, joka käynnistää uuden putin
      * suorittamiseen liittyvän tapahtumaketjun.
-     * @param action 
+     * @param action : puttausnapin painamisen aiheuttama tapahtuma
      */
     @Override
     public void actionPerformed(ActionEvent action) {
         
-        // Asetetaan peli instanssi muuttujaan
-        Game game = canvas.getGame();
+        // Hakee peli-instanssin aktiivisen pelaajan
+        Player player = canvas.getGame().getActivePlayer();
         
-        // Jos timer on käynnössä, niin lyönti on kesken
+        // Tarkistaa ettei pelialustan ajastin ole käynnissä
         if (!canvas.timerIsRunning()) {
+            
+            // Suorittaa putin aktiivisella pelaajalla
+            player.put(power, angle);
+            
+            // Käynnistää pelialustan ajastimen  
+            canvas.startTimer();
+            
             // TODO: Disable putti painike
-            game.performPut(canvas, power, angle);
+            
         }
     }
     
@@ -61,7 +73,7 @@ public class GameInputManager implements ActionListener, ChangeListener {
         
         switch (slider.getName()) {
             case "Power Input":
-                setPower(slider.getValue() * 10);
+                setPower(slider.getValue());
                 System.out.println("power: " + slider.getValue());
                 break;
             case "Angle Input":
@@ -70,5 +82,8 @@ public class GameInputManager implements ActionListener, ChangeListener {
                 break;
         }
     }
+
+
+
     
 }

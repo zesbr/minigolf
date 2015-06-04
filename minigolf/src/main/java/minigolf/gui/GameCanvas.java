@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -29,15 +30,15 @@ public class GameCanvas extends JPanel implements ActionListener {
     
     private final boolean SHOW_HUD = false;
     private final boolean SHOW_GUI = true;
-    private double fps = 0;
+    private final int FPS = 1000 / 60;
     
     public GameCanvas(Game game) {
         super();  
         this.game = game;
         this.layout = new GridLayout(4, 3); // TODO: Joku muu layout voisi sopia paremmin
         this.gui = new GUI(this);
-        this.hud = new HUD();
-        this.timer = new Timer((int) fps, this);
+        //this.hud = new HUD();
+        this.timer = new Timer(FPS, this);
         
         init();
     }
@@ -92,7 +93,7 @@ public class GameCanvas extends JPanel implements ActionListener {
     
     /**
      * Tarkistaa onko ajastin päällä ja palauttaa totuusarvon
-     * @return boolean : true, jos ajastin on päällä ja muuten false
+     * @return totuusarvo onko ajastin päällä (true) vai ei (false)
      */
     public boolean timerIsRunning() {
         return timer.isRunning();
@@ -109,17 +110,13 @@ public class GameCanvas extends JPanel implements ActionListener {
     /**
      * Palauttaa piirtoalustan peli-instanssin. Tätä kutsutaan mm. tapahtuma-
      * käsittelijästä kun pelissä olevan pallon sijaintia päivitetään.
-     * @return
+     * @return peli-instanssi
      */
     public Game getGame() {
         return game;
     }
     
-    /**
-     * TODO
-     * @param g
-     * @return 
-     */
+    // Palauttaa reunepehmennetyn grafiikka-olion
     private Graphics2D getSmootherGraphics(Graphics g) {
         RenderingHints rendering = new RenderingHints(
                 RenderingHints.KEY_ANTIALIASING, 
@@ -136,9 +133,9 @@ public class GameCanvas extends JPanel implements ActionListener {
     }
     
     /**
-     * Piirtää reiän mustalla.
-     * @param g
-     * @param hole 
+     * Piirtää pelikentän reiän
+     * @param g : grafiikka-olio
+     * @param hole : reikä
      */
     public void paint(Graphics2D g, Hole hole) {
         int x = hole.getX();
@@ -150,9 +147,9 @@ public class GameCanvas extends JPanel implements ActionListener {
     }
     
     /**
-     * Piirtää esteen vaaleanharmaalla. 
-     * @param g
-     * @param obstacle 
+     * Piirtää pelikentän esteen
+     * @param g : grafiikka-olio
+     * @param obstacle : este
      */
     public void paint(Graphics2D g, Obstacle obstacle) {
         int x = obstacle.getX();
@@ -165,9 +162,9 @@ public class GameCanvas extends JPanel implements ActionListener {
     }
     
     /**
-     * Piirtää pallon valkoisella.
-     * @param g
-     * @param ball 
+     * Piirtää pallon
+     * @param g : grafiikka-olio
+     * @param ball : pallo
      */
     public void paint(Graphics2D g, Ball ball) {
         int x = (int) ball.getX();
@@ -179,67 +176,66 @@ public class GameCanvas extends JPanel implements ActionListener {
     }
     
     /**
-     * TODO
-     * @param g 
+     * Piirtää pelialustan komponentit
+     * @param g : grafiikka-olio
      */
     @Override
     public void paintComponent(Graphics g) {   
         super.paintComponent(g);     
-        
         // Luo uuden reunapehmennetyn (antialias) grafiikka-olion
         Graphics2D graphics = getSmootherGraphics(g); 
-
+        // Haetaan nykyinen kenttä
         Level level = game.getCurrentLevel();
-        
-        // Piirtää kaikki kentän esteet piirtoalustan
+        // Piirtää kaikki kentän esteet piirtoalustaan
         for (Obstacle obstacle : level.getObstacles()) {
             paint(graphics, obstacle);
         }
-        
         // Piirtää reiän piirtoalustaan
         paint(graphics, level.getHole());
-        
         // Piirtää pallon piirtoalustaan
-        paint(graphics, game.getBallOnPlay());
+        paint(graphics, game.getActiveBall());
     }
     
     /**
-     * TODO
-     * @param ae 
+     * Luokan ajastinta kuunteleva tapahtumakäsittelijä, jota kutsutaan pallon 
+     * ollessa liikkeessä 60 kertaa sekunnissa
+     * @param ae : ajastimen tapahtuma
      */
     @Override
     public void actionPerformed(ActionEvent ae) {
-        Ball ball = game.getBallOnPlay();
-        
-        if (ball.getSpeed() > 1) { 
-            // Tarkistaa onko pallo reiässä tai esteessä ja liikuttaa palloa
-            if (game.ballIsInHole(ball)) {
-                // TODO: Tässä tulisi tapahtua pelaajan tai radan vaihto
-            } else if (game.ballHitsObstacle(ball)) { 
-                ball.move();
-            } else {
-                ball.move();
-            }
-            
-            fps += 0.05;
-            timer.setDelay((int) fps);
-            // Hidastetaan ajastinta
-            if (ball.getSpeed() < 200) {
-                fps += 0.3;
-                timer.setDelay((int) fps);
-            }
+        // Hakee pelissä olevan pallon
+        Ball ball = game.getActiveBall();
+        // Tarkistetaan onko pallo liikkeessä
+        if (ball.getSpeed() > 0) {   
+            // Liikuttaa palloa
+            ball.move(this);
             // Piirtää alustan uudelleen
-            repaint();
+            repaint();    
         } else {
-            // Pysäytetään pallo
-            ball.setSpeed(0);
-            
-            System.out.println("Lyönnin jälkeen pallo on kohdassa: [" +
-                (int) ball.getX() + ", " + (int) ball.getY() + "]");
-            
-            // Alustetaan ajastimen nopeus ja pysäytetään ajastin
-            fps = 0;
-            timer.setDelay(0);
+            // Nollataan pallon liike
+            ball.setSpeed(0);  
+            //
+            Level level = game.getCurrentLevel();
+            if (level.ballIsInHole(ball)) {
+                // TODO: Tässä tulisi tapahtua reikään uppoamisen ääniefekti
+                
+                // Tarkistaa ovatko kaikki pelaajat pelanneet reiän
+                
+                // 
+                game.switchLevel();
+                level = game.getCurrentLevel();
+                game.placeBallsToTee(level.getTee());
+
+                // Näyttää pelaajan tuloskortin
+                
+                try {
+                    Thread.sleep(3000l);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                repaint();
+            }
+            // Pysäytettään ajastin lyönnin päätteeksi
             stopTimer();
         }
     }

@@ -3,12 +3,9 @@ package minigolf.game;
 import minigolf.domain.Tee;
 import minigolf.domain.Level;
 import minigolf.domain.Player;
-import minigolf.domain.Hole;
 import minigolf.domain.Ball;
 import java.util.ArrayDeque;
-import minigolf.domain.CourseArchitect;
-import minigolf.domain.Obstacle;
-import minigolf.gui.GameCanvas;
+import minigolf.domain.LevelArchitect;
 
 /**
  * 
@@ -18,12 +15,10 @@ public class Game {
     
     private ArrayDeque<Level> levels;
     private ArrayDeque<Player> players;
-    private CourseArchitect architect;
     
     public Game() {
         this.levels = new ArrayDeque<>();
         this.players = new ArrayDeque<>();
-        this.architect = new CourseArchitect();
         
         init();
     }
@@ -34,64 +29,72 @@ public class Game {
     private void init() {
         addPlayers();
         addLevels();
-        placeBallsToTee(getTee()); 
+        placeBallsToTee(getCurrentLevel().getTee()); 
     }
     
+    public void start() {
+        
+    }
+    
+    public void startNewRound() {
+        
+    }
+    
+    // Lisää pelaajat
     private void addPlayers() {   
         Player p1 = new Player("P1");
         players.add(p1);        
     }
     
+    // Lisää kentät
     private void addLevels() {
-        levels.add(architect.buildLevel01());
+        levels.add(LevelArchitect.buildLevel(0));
+        levels.add(LevelArchitect.buildLevel(1));
+        levels.add(LevelArchitect.buildLevel(2));
+        levels.add(LevelArchitect.buildLevel(3));
+        levels.add(LevelArchitect.buildLevel(4));
     }
     
     /**
-     * 
+     * Vaihtaa kentän ja palauttaa seuraavaksi pelattavan kentän
+     * @return seuraavaa vuorossa oleva kenttä
      */
-    public void switchLevel() {
-        Level previous = levels.pollLast();
+    public Level switchLevel() {
+        Level previous = levels.pollFirst();
         levels.add(previous);
+        return getCurrentLevel();
     }
     
     /**
-     * 
+     * TODO
      * @return 
      */
     public Level getCurrentLevel() {
-        return levels.peekLast();
+        return levels.peekFirst();
     }
     
     /**
      * Vaihtaa jonon edessä olevaa pelaaja. Ensimmäinen pelaaja menee viimeiseksi.
      */
     public void switchPlayer() {
-        Player previous = players.pollLast();
+        Player previous = players.pollFirst();
         players.add(previous);
     }
     
     /**
-     * 
-     * @return 
+     * Palauttaa aktiivisen pelaajan
+     * @return pelaaja
      */
     public Player getActivePlayer() {
-        return players.peekLast();
+        return players.peekFirst();
     }
-    
-    /**
-     * 
-     * @return 
-     */
-    public Tee getTee() {
-        Level level = getCurrentLevel();
-        return level.getTee();
-    }
+
     
     /**
      * Alustaa jokaisen pelaajan pallot aloituspaikalle.
-     * @param Tee : Kentän merkitty aloituspaikka.
+     * @param tee
      */
-    private void placeBallsToTee(Tee tee) {
+    public void placeBallsToTee(Tee tee) {
         for (Player player : players) {
             player.setBall(new Ball(tee.getX(), tee.getY()));
         }
@@ -101,152 +104,10 @@ public class Game {
      * Hakee ja palauttaa aktiivisen pelaajan pallon
      * @return Ball : Aktiivisen pelaajan pallo 
      */
-    public Ball getBallOnPlay() {
+    public Ball getActiveBall() {
         Player player = getActivePlayer();
         return player.getBall();
     }
     
-    /**
-     * Suorittaa puttauksen
-     * @param canvas
-     * @param power
-     * @param angle 
-     */
-    public void performPut(GameCanvas canvas, double power, double angle) {
-        Ball ball = getBallOnPlay();
-        ball.setInitSpeed(power);
-        ball.setSpeed(power);
-        ball.setAngle(angle);
-        
-        System.out.println("Ennen löyntiä pallo on kohdassa: [" +
-                (int) ball.getX() + ", " + (int) ball.getY() + "]");
-        
-        // int delay = (int) (power * -1) + 1000;
-        
-        // canvas.setTimerDelay((int) delay/10);
-        canvas.startTimer();
-    }
     
-    /**
-     * Tarkistaa onko pallo reiässä ja palauttaa totuusarvon.
-     * @param ball
-     * @return boolean : totuusarvo, onko pallo reiässä (true) vai ei (false)
-     */
-    public boolean ballIsInHole(Ball ball) {
-        Level level = getCurrentLevel();
-        Hole hole = level.getHole();
-
-        if (hole.inside(ball.getCenterX(), ball.getCenterY())) {
-            
-            if (ball.getSpeed() < 200) {
-                System.out.println("Pallo on reiässä! Hienoa!");
-                ball.setSpeed(0);
-                ball.setX(level.getTee().getX());
-                ball.setY(level.getTee().getY());
-                return true;
-            } else {
-                System.out.println("Pallo ylittää reiän koska sen nopeus on liian suuri");
-                return false;
-            }
-            
-        }
-        return false;
-    }
-    
-    /**
-     * Tarkistaa osuuko pallo esteeseen ja jos osuu, niin laskee kimmokkeen 
-     * aiheuttauman uuden kulman pallolle sekä palauttaa totuusarvon true. 
-     * Jos pallo ei osu, niin palauttaa false.
-     * 
-     * TODO: 
-     * Refaktoroi muuttujien alustus alussa 
-     * Refaktoroi if-laseiden toisto
-     * Siirrä kimpoamisen kulman laskenta toisaalle
-     * 
-     * @param ball
-     * @return boolean : totuusarvo, että osuuko pallo esteeseen vai ei
-     */
-    public boolean ballHitsObstacle(Ball ball) {
-        Level level = getCurrentLevel();
-        
-        int ballTopX = (int) ball.getX() + ball.getRadius();
-        int ballTopY = (int) ball.getY();
-        
-        int ballBottomX = (int) ball.getX() + ball.getRadius();
-        int ballBottomY = (int) ball.getY() + ball.getDiameter();
-        
-        int ballRightX = (int) ball.getX() + ball.getDiameter();
-        int ballRightY = (int) ball.getY() + ball.getRadius();
-        
-        int ballLeftX = (int) ball.getX();
-        int ballLeftY = (int) ball.getY() + ball.getRadius();
-        
-        for (Obstacle obstacle : level.getObstacles()) {    
-            
-            // Tarkistaa osuuko pallo esteen alalaitaan
-            if (ballTopX >= obstacle.getX() && ballTopX <= obstacle.getX() + obstacle.getWidth() 
-                    && ballTopY == obstacle.getY() + obstacle.getHeight()) {
-                
-                System.out.println("Pallo osui esteen alalaitaan kohdassa: [" 
-                        + ballTopX + ", " + ballTopY + "]");
-                
-                // Asetetaan pallolle uusi suunta ja nopeus
-                ball.setAngle(ball.getAngle() * -1);
-                ball.setSpeed(ball.getSpeed() - 50);
-                
-                return true;
-            }
-            
-            // Tarkistaa osuuko pallo esteen ylälaitaan
-            if (ballBottomX >= obstacle.getX() && ballBottomX <= obstacle.getX() + obstacle.getWidth() 
-                    && ballBottomY == obstacle.getY()) {
-                
-                System.out.println("Pallo osui esteen ylälaitaan kohdassa: [" 
-                        + ballBottomX + ", " + ballBottomY + "]");
-                
-                // Asetetaan pallolle uusi suunta ja nopeus
-                ball.setAngle(ball.getAngle() * -1);
-                ball.setSpeed(ball.getSpeed() - 50);
-                
-                return true;
-            }
-            
-            // Tarkistaa osuuko pallo eseteen oikeaan laitaan
-            if (ballLeftY >= obstacle.getY() && ballLeftY <= obstacle.getY() + obstacle.getHeight() 
-                    && ballLeftX == obstacle.getX() + obstacle.getWidth()) {
-                
-                System.out.println("Pallo osui esteen oikeaan laitaan kohdassa: [" 
-                        + ballLeftX + ", " + ballLeftY + "]");
-                
-                // Asetetaan pallolle uusi suunta ja nopeus
-                if (ball.getAngle() > 90 && ball.getAngle() <= 180) {
-                    ball.setAngle(180 - ball.getAngle());
-                } else {
-                    ball.setAngle(-180 - ball.getAngle());
-                }
-                ball.setSpeed(ball.getSpeed() - 50);
-                
-                return true;
-            }
-            
-            // Tarkistaa osuuko pallo esteen vasempaan laitaan
-            if (ballRightY >= obstacle.getY() && ballRightY <= obstacle.getY() + obstacle.getHeight() 
-                    && ballRightX == obstacle.getX()) {
-                
-                System.out.println("Pallo osui esteen vasempaan laitaan kohdassa: " 
-                        + ballRightX + ", " + ballRightY + "]");
-                
-                // Asetetaan pallolle uusi suunta ja nopeus
-                if (ball.getAngle() >= 0 && ball.getAngle() < 90) {
-                    ball.setAngle(180 - ball.getAngle());
-                } else {
-                    ball.setAngle(-180 - ball.getAngle());
-                }
-                ball.setSpeed(ball.getSpeed() - 50);
-                
-                return true;
-            }
-        }
-        return false;
-    }
 }

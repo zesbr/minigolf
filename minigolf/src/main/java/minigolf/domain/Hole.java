@@ -2,7 +2,7 @@ package minigolf.domain;
 
 public class Hole extends LevelObject {
     
-    private final int RADIUS = 20;
+    private final int RADIUS = 15;
     private final int DIAMETER = RADIUS * 2;
     
     public Hole(int x, int y) {
@@ -11,7 +11,7 @@ public class Hole extends LevelObject {
     
     /**
      * Palauttaa reiän säteen
-     * @return int : reiän säde
+     * @return säde
      */
     public int getRadius() {
         return RADIUS;
@@ -19,15 +19,15 @@ public class Hole extends LevelObject {
 
     /**
      * Palauttaa reiän halkaisijan
-     * @return int : reiän halkaisija
+     * @return halkaisija
      */
     public int getDiameter() {
         return DIAMETER;
     }
     
     /**
-     * Palautaa reiän keskipistee x-koordinaatin
-     * @return int : reiän keskipisteen x-koordinaatti
+     * Palautaa reiän keskipisteen x-koordinaatin
+     * @return x-koordinaatti
      */
     public int getCenterX() {
         return getX() + RADIUS;
@@ -35,32 +35,32 @@ public class Hole extends LevelObject {
     }
     
     /**
-     * Palautaa reiän keskipistee y-koordinaatin
-     * @return int : reiän keskipisteen y-koordinaatti
+     * Palautaa reiän keskipisteen y-koordinaatin
+     * @return y-koordinaatti
      */
     public int getCenterY() {
         return getY() + RADIUS;
     }
     
     /**
-     * Tarkistaa onko koordinaatti reiän sisällä
+     * Tarkistaa onko piste reiän sisällä
      * @param x : x-koordinaatti
      * @param y : y-koordinaatti
-     * @return boolean : true jos on ja false jos ei
+     * @return totuusarvo onko piste reiän kehän sisäpuolellea (true) vai ulkopuolella (false)
      */
-    public boolean inside(int x, int y) {
-        return withinRadius(x, y, RADIUS);
+    public boolean inHole(int x, int y) {
+        return withinDistance(x, y, RADIUS);
     }
     
     /**
-     * Tarkistaa onko koordinaatti tietyn etäisyyden päässä reistä
-     * @param x : x-koordinaatti
-     * @param y : y-koordinatti
-     * @param radius : etäisyys
-     * @return boolean : true jos on ja muuten false
+     * Tarkistaa onko piste tietyn etäisyyden päässä reiästä
+     * @param x : pisteen x-koordinaatti
+     * @param y : pisteen y-koordinaatti
+     * @param distance : tarkistusalueen säde eli etäisyys reiän keskipisteestä
+     * @return totuusarvo onko piste etäisyyden päässä reiän keskipisteessä (true) vai ei (false)
      */
-    public boolean withinRadius(int x, int y, int radius) {
-        if (Math.pow(x - getCenterX(), 2) + Math.pow(y - getCenterY(), 2) < Math.pow(radius, 2)) {
+    public boolean withinDistance(int x, int y, int distance) {
+        if (Math.pow(x - getCenterX(), 2) + Math.pow(y - getCenterY(), 2) < Math.pow(distance, 2)) {
             return true;
         }
         return false;

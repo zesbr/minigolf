@@ -2,6 +2,11 @@ package minigolf.domain;
 
 import java.util.ArrayList;
 
+/**
+ * Pelialuetta mallintava luokka, joka vastaa pelialueen määrittämisestä, sekä
+ * alustamista
+ * @author jesruuth
+ */
 public class Level {
     
     private int x;
@@ -12,23 +17,7 @@ public class Level {
     private Hole hole;
     private ArrayList<Obstacle> obstacles;
     
-    public Level(int x, int y, int width, int height) {
-        if (x < 0) {
-          this.x = 0;  
-        } else {
-           this.x = x; 
-        }
-        if (y < 0) {
-          this.y = 0;  
-        } else {
-           this.y = x; 
-        }
-        this.width = width;
-        this.height = height;
-        this.tee = null;
-        this.hole = null;
-        this.obstacles = new ArrayList<>();
-    }
+    private final int WALL_THICKNESS = 20;
     
     public Level(int x, int y, int width, int height, Tee tee, Hole hole) {
         if (x < 0) {
@@ -43,14 +32,17 @@ public class Level {
         }
         this.width = width;
         this.height = height;
+        // TODO: Validoi aloituspaikan sijainti
         this.tee = tee;
-        this.hole = hole;
+        // TODO: Validoi reiän sijainti
+        this.hole = hole;  
         this.obstacles = new ArrayList<>();
+        buildWalls();
     }
     
     /**
      * Palauttaa kentän x-koordinaatin
-     * @return int : kentän x-koordinaatti
+     * @return x-koordinaatti
      */
     public int getX() {
         return x;
@@ -58,7 +50,7 @@ public class Level {
     
     /**
      * Palauttaa kentän y-koordinaatin
-     * @return int : kentän y-koordinaatti
+     * @return y-koordinaatti
      */
     public int getY() {
         return y;
@@ -66,7 +58,7 @@ public class Level {
     
     /**
      * Palauttaa kentän leveyden
-     * @return int : kentän leveys
+     * @return leveys
      */
     public int getWidth() {
         return width;
@@ -74,7 +66,7 @@ public class Level {
     
     /**
      * Palauttaa kentän korkeuden
-     * @return int : kentän korkeus
+     * @return korkeus
      */
     public int getHeight() {
         return height;
@@ -82,36 +74,20 @@ public class Level {
 
     /**
      * Palauttaa kentän aloituspaikan
-     * @return Tee : kentän aloituspaikka
+     * @return aloituspaikka
      */
     public Tee getTee() {
         return tee;
     }
     
     /**
-     * Palautttaa kentän reiän
-     * @return Hole : kentän reikä
-     */
-    public Hole getHole() {
-        return hole;
-    }
-
-    /**
-     * Palauttaa listan kentän esteistä
-     * @return ArrayList : lista kentän esteistä
-     */
-    public ArrayList<Obstacle> getObstacles() {
-        return obstacles;
-    }
-    
-    /**
      * Asettaa kentälle uuden aloituspaikan
-     * @param tee : kentän uusi aloituspaikka
+     * @param tee : aloituspaikka
      */
     public void setTee(Tee tee) {
         if (!isOutOfBounds(tee.getX(), getY())) {
             if (hole != null) {
-                if (!hole.withinRadius(tee.getX(), tee.getY(), 200)) {
+                if (!hole.withinDistance(tee.getX(), tee.getY(), 200)) {
                     this.tee = tee;
                 }
             } else {
@@ -119,15 +95,23 @@ public class Level {
             }
         }
     }
-
+    
+    /**
+     * Palautttaa kentän reiän
+     * @return reikä
+     */
+    public Hole getHole() {
+        return hole;
+    }
+    
     /**
      * Asettaa kentälle uuden reiän
-     * @param hole : kentön uusi reikä
+     * @param hole : eikä
      */
     public void setHole(Hole hole) {
         if (!isOutOfBounds(hole.getX(), hole.getY())) {
             if (tee != null) {
-                if (!hole.withinRadius(tee.getX(), tee.getY(), 200)) {
+                if (!hole.withinDistance(tee.getX(), tee.getY(), 200)) {
                     this.hole = hole;
                 }
             } else {
@@ -135,20 +119,32 @@ public class Level {
             }
         }
     }
+    
+    /**
+     * Palauttaa listan kentän esteistä
+     * @return estelista
+     */
+    public ArrayList<Obstacle> getObstacles() {
+        return obstacles;
+    }
+    
+    
+
+    
 
     /**
-     * Lisää uuden esteen kentän esteiden listaan
-     * @param obstacle : kentän uusi este
+     * Lisää uuden esteen kentän estelistaan
+     * @param obstacle : este
      */
     public void addObstacle(Obstacle obstacle) {
         this.obstacles.add(obstacle);
     } 
     
     /**
-     * Tarkistaa onko koordinaatti pelialueen sisällä ja palauttaa totuusarvon
+     * Tarkistaa onko koordinaatti pelialueen ulkopuolella ja palauttaa totuusarvon
      * @param x : x-koordinaatti
      * @param y : y-koordinaatti
-     * @return boolean : true jos ulkopuolella ja muuten false
+     * @return totuusarvo oliko piste pelialueen ulkopuolella (true) vai sisäpuolella (false)
      */
     public boolean isOutOfBounds(int x, int y) {
         if (x < this.x || x > (this.x + this.width) || y < this.y || y > (this.y + this.height)) {
@@ -158,32 +154,61 @@ public class Level {
     }
     
     /**
-     * Asettaa kenttää ympäröivät seinät kentän pinta-alan perusteella
+     * Tarkistaa onko pallo reiässä ja palauttaa totuusarvon
+     * @param ball : pelissä oleva pallo
+     * @return totuusarvo, onko pallo reiässä (true) vai ei (false)
      */
-    public void setWalls() {
+    public boolean ballIsInHole(Ball ball) {
+        // Tarkistaa onko pallon keskipiste reiän kehän sisällä
+        if (hole.inHole(ball.getCenterX(), ball.getCenterY())) { 
+            // Tarkistaa onko pallon nopeus liian suuri upotakseen reikään
+            if (ball.getSpeed() < 300) { 
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Tarkistaa osuuko pallo esteeseen ja jos osuu, niin laskee kimmokkeen 
+     * aiheuttauman uuden kulman pallolle sekä palauttaa totuusarvon true. 
+     * Jos pallo ei osu, niin palauttaa false.
+     * @param ball
+     * @return boolean : totuusarvo, että osuuko pallo esteeseen vai ei
+     */
+    public boolean ballHitsObstacle(Ball ball) {
+        for (Obstacle obstacle : obstacles) {      
+            if (obstacle.hits(ball)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // Rakentaa pelialuetta ympäröivät seinät uusina esteinä ja lisää ne estelistaan
+    private void buildWalls() {
         
-        // Määritetään seinien paksuus ja koordinaatit muuuttujiien
-        int wallThickness = 20; // TODO: Aseta kentän attribuutiksi
+        // Määritetään seinien koordinaatit apumuuttujiin
         int topLeftX = x;
         int topLeftY = y;
-        int topRightX = x + width - wallThickness;
-        int topRightY = 0;
-        int bottomLeftX = 0;
-        int bottomLeftY = 0 + height - wallThickness;
-        int bottomRightX = x + width + wallThickness;
+        int topRightX = x + width - WALL_THICKNESS;
+        int topRightY = y;
+        int bottomLeftX = x;
+        int bottomLeftY = x + height - WALL_THICKNESS;
+        int bottomRightX = x + width + WALL_THICKNESS;
         int bottomRightY = y + height;
         
-        // Rakentaa yläreunan
-        addObstacle(new Obstacle(topLeftX, topLeftY, width, wallThickness));
+        // Rakentaa yläseinän
+        addObstacle(new Obstacle(topLeftX, topLeftY, width, WALL_THICKNESS));
 
-        // Rakentaa alareunan
-        addObstacle(new Obstacle(bottomLeftX, bottomLeftY, width, wallThickness));
+        // Rakentaa alaseinän
+        addObstacle(new Obstacle(bottomLeftX, bottomLeftY, width, WALL_THICKNESS));
         
-        // Rakentaa vasemman reunan
-        addObstacle(new Obstacle(topLeftX, (topLeftY + wallThickness), wallThickness, (height - (2 * wallThickness))));
+        // Rakentaa vasemman seinän
+        addObstacle(new Obstacle(topLeftX, (topLeftY + WALL_THICKNESS), WALL_THICKNESS, (height - (2 * WALL_THICKNESS))));
         
-        // Asettaa oikean reunan
-        addObstacle(new Obstacle(topRightX, (topRightY + wallThickness), wallThickness, (height - (2 * wallThickness))));
+        // Asettaa oikean seinän
+        addObstacle(new Obstacle(topRightX, (topRightY + WALL_THICKNESS), WALL_THICKNESS, (height - (2 * WALL_THICKNESS))));
     }
     
 }

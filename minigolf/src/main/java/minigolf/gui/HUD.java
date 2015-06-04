@@ -11,4 +11,9 @@ import javax.swing.*;
  */
 public class HUD extends JPanel {   
 
+    private GameCanvas canvas;
+    
+    public HUD(GameCanvas canvas) {
+        this.canvas = canvas;
+    }
 }

@@ -24,7 +24,7 @@ public class LevelTest {
     
     @Before
     public void setUp() {
-        level = new Level(0, 0, 800, 600);
+        level = new Level(0, 0, 800, 600, new Tee(0,0), new Hole(0,0));
     }
     
     @After
@@ -42,7 +42,7 @@ public class LevelTest {
     
     @Test
     public void levelCannotBeConstructedWithNegativeCoordinates() {
-        level = new Level(-10, -10, 800, 600);
+        level = new Level(-10, -10, 800, 600, new Tee(0,0), new Hole(0,0));
         int x = level.getX();
         int y = level.getY();
         
@@ -66,8 +66,8 @@ public class LevelTest {
     
     @Test
     public void teeAndHoleMustBeMoreThanTwoHundredPixelsAwayFromEachOther() {
-        Level level1 = new Level(0, 0, 800, 600);
-        Level level2 = new Level(0, 0, 800, 600);
+        Level level1 = new Level(0, 0, 800, 600, new Tee(0,0), new Hole(0,0));
+        Level level2 = new Level(0, 0, 800, 600, new Tee(0,0), new Hole(0,0));
         
         level1.setHole(new Hole(10, 10));
         level1.setTee(new Tee(20, 20));

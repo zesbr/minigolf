@@ -97,13 +97,13 @@ public class HoleTest {
 
     @Test
     public void checkingIfCoordinateIsInsideHoleWorks() {
-        assertEquals(true, hole.inside(120, 120));
-        assertEquals(false, hole.inside(200, 200));
+        assertEquals(true, hole.inHole(120, 120));
+        assertEquals(false, hole.inHole(200, 200));
     }
     
     @Test
     public void checkingIfCoordinateIsWithInRadius() {
-        assertEquals(true, hole.withinRadius(120, 120, 20));
-        assertEquals(false, hole.withinRadius(200, 200, 79));
+        assertEquals(true, hole.withinDistance(120, 120, 20));
+        assertEquals(false, hole.withinDistance(200, 200, 79));
     }
 }
