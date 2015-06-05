@@ -42,7 +42,6 @@ public class Game {
     
     // Lisää kentät
     private void addLevels() {
-        levels.add(LevelArchitect.buildLevel(0));
         levels.add(LevelArchitect.buildLevel(1));
         levels.add(LevelArchitect.buildLevel(2));
         levels.add(LevelArchitect.buildLevel(3));

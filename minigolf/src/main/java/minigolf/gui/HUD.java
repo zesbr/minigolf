@@ -1,6 +1,8 @@
 
 package minigolf.gui;
 
+import java.awt.Color;
+import java.awt.GridLayout;
 import javax.swing.*;
 
 /**
@@ -17,6 +19,19 @@ public class HUD extends JPanel {
     private GameCanvas canvas;
     
     public HUD(GameCanvas canvas) {
+        super();
         this.canvas = canvas;
+        
+        init();
+        addComponents();
     }
+    
+    private void init() {
+        setOpaque(false); 
+    }
+    
+    private void addComponents() {
+        
+    }
+
 }

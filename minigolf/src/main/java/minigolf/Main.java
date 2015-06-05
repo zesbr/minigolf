@@ -1,16 +1,17 @@
 package minigolf;
 
+import javax.swing.SwingUtilities;
+
 /**
- * Ohjelman käynnistävä luokka, joka sisältää main metodin. Luokan main
- * metodista luodaan uusi App instanssi, sekä kutsutaan ohjelmaa ajavaa run 
- * metodia.
+ * Sovelluksen käynnistävä luokka, joka sisältää main metodin, jossa luodaan 
+ * uusi sovellus-instanssi ja käynnistetään sovellus.
  * @author zesbr
  */
 public class Main {
     
     public static void main(String[] args) {
         App app = new App();
-        app.run();
+        SwingUtilities.invokeLater(app);
     }
     
 }

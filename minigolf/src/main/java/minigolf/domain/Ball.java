@@ -272,4 +272,16 @@ public class Ball {
         angle -= (double) Math.toDegrees(Math.atan2((this.y - getCenterY()), -(this.x - getCenterX())));
     }
     
+    /**
+     * Laskeen kulman pallon ja pisteen välillä ja palauttaa kulman suuruuden
+     * @param x : pisteen x-koordinaatti
+     * @param y : pisteen y-koordinaatti
+     * @return : kulman arvo
+     */
+    public double getAngleToPoint(float x, float y) {
+        float diffY = y - getCenterY();
+        float diffX = getCenterX() - x;
+        return (double) Math.toDegrees(Math.atan2(-diffY, -diffX));
+    }
+    
 }

@@ -1,6 +1,11 @@
 package minigolf.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.EventListener;
 import javax.swing.JButton;
@@ -8,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSlider;
+import javax.swing.UIManager;
 import javax.swing.event.ChangeListener;
 
 /**
@@ -26,56 +32,40 @@ public class GUI extends JPanel {
     private final int ANGLE_INIT = 45;
     
     private GameCanvas canvas; 
-    private GridLayout layout;
-    private EventListener handler;
+    private BorderLayout layout;
+    private GameInputManager handler;
+    
+    private PowerBar powerBar;
     
     public GUI(GameCanvas canvas) {
         super();
         this.canvas = canvas;
-        this.layout = new GridLayout(3,2);
+        this.layout = new BorderLayout();
         this.handler = new GameInputManager(canvas, POWER_INIT, ANGLE_INIT);
-        
+        this.powerBar = new PowerBar(canvas);
+
         init();
         addComponents();
     }
     
     private void init() {
-        setLayout(layout);
+        
+        setLayout(null);
         setOpaque(false);  
     }
     
+    public PowerBar getPowerBar() {
+        return powerBar;
+    }
+    
     private void addComponents() {    
-        
-        
-        JProgressBar powerBar = new JProgressBar(JProgressBar.VERTICAL, 1, 1000);
-        
-        JSlider powerInput = new JSlider(POWER_MIN, POWER_MAX, POWER_INIT);
-        JSlider angleInput = new JSlider(ANGLE_MIN, ANGLE_MAX, ANGLE_INIT);
-        JButton putButton = new JButton("Put!");
-        
-        powerInput.setOpaque(false);
-        angleInput.setOpaque(false);
-        
-        powerInput.setName("Power Input");
-        angleInput.setName("Angle Input");
-
-        // Lisää muutos- ja tapahtukuuntelijat käyttöliittymän komponenteille
-        powerInput.addChangeListener((ChangeListener) handler);
-        angleInput.addChangeListener((ChangeListener) handler);
-        putButton.addActionListener((ActionListener) handler);
        
+powerBar.setForeground(Color.blue);
+        powerBar.setBorderPainted(false);
+        powerBar.setBounds(340, 360, 20, 200);
+        add(powerBar);
         
-        powerBar.setAlignmentX(TOP_ALIGNMENT);
-        powerBar.setSize(10, 200);
-        //add(powerBar);
-        
-        add(new JLabel("Power:"));
-        add(powerInput);
-        
-        add(new JLabel("Angle:"));
-        add(angleInput);
-        
-        add("Put Button", putButton);
+        add(new JLabel("Aim with mouse and hold down the right mouse button"));
     }
     
 }

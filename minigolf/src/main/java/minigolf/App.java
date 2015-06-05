@@ -16,7 +16,6 @@ public class App implements Runnable {
     private final int HEIGHT = 600;
     private final String TITLE = "Minigolf";
     private final boolean RESIZABLE = false;
-    
     private JFrame frame;
     private ViewManager manager;
     
@@ -29,12 +28,11 @@ public class App implements Runnable {
         frame.setTitle(TITLE);
         frame.setResizable(RESIZABLE);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); 
-        
         frame.getContentPane().add(manager);
     }
     
     /**
-     * Ohjelamn ajava metodi, josta luodaan uusi JFrame ja ViewManger,
+     * Ohjelmaa ajava metodi, josta luodaan uusi JFrame ja ViewManger,
      * kutsutaan alustusmetodia (init) sekä lopuksi pakataan komponentit.
      */
     @Override

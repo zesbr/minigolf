@@ -28,16 +28,19 @@ public class ViewManager extends JPanel implements ActionListener {
         init();
     }
     
+    // Alustaa näkymänhallitsijan
     private void init() {
         setLayout(layout);
         startMenu();
     }
     
+    // Käynnistää päävalikon
     private void startMenu() {
         add(STARTMENU, new StartMenu(this)); 
         layout.show(this, STARTMENU);
     }
     
+    // Käynnistää uuden pelin
     private void startGame(Game game) {
         add(GAME, new GameCanvas(game));
         layout.show(this, GAME);
@@ -45,12 +48,12 @@ public class ViewManager extends JPanel implements ActionListener {
     
     /**
      * Tapahtumakuuntelija, joka käsittelee näkymien vaihtamiseen ja luontiin
-     * liittyvät pyynnöt.
-     * @param actionEvent
+     * liittyvät pyynnöt
+     * @param ae : tapahtuma
      */
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getActionCommand().equals("New Game")) {
+    public void actionPerformed(ActionEvent ae) {
+        if (ae.getActionCommand().equals("New Game")) {
             startGame(new Game());
         }
     }

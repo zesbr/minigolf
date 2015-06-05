@@ -44,24 +44,7 @@ public class GameInputManager implements ActionListener, ChangeListener {
      */
     @Override
     public void actionPerformed(ActionEvent action) {
-        
-        // Hakee peli-instanssin aktiivisen pelaajan
-        Player player = canvas.getGame().getActivePlayer();
-        
-        // Tarkistaa ettei pelialustan ajastin ole käynnissä
-        if (!canvas.timerIsRunning()) {
-            
-            System.out.println(player.getName() + " lyö palloa voimalla " + power + " ja kulmassa " + angle);
-            
-            // Suorittaa putin aktiivisella pelaajalla
-            player.put(power, angle);
-            
-            // Käynnistää pelialustan ajastimen  
-            canvas.startTimer();
-            
-            // TODO: Disable putti painike
-            
-        }
+
     }
     
     /**
