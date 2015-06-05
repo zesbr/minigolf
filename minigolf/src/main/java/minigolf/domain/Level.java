@@ -15,11 +15,12 @@ public class Level {
     private int height;
     private Tee tee;
     private Hole hole;
+    private String name;
     private ArrayList<Obstacle> obstacles;
     
     private final int WALL_THICKNESS = 20;
     
-    public Level(int x, int y, int width, int height, Tee tee, Hole hole) {
+    public Level(int x, int y, int width, int height, Tee tee, Hole hole, String name) {
         if (x < 0) {
           this.x = 0;  
         } else {
@@ -34,6 +35,7 @@ public class Level {
         this.height = height;
         setTee(tee);
         setHole(hole); 
+        this.name = name;
         this.obstacles = new ArrayList<>();
         buildWalls();
     }
@@ -116,6 +118,14 @@ public class Level {
                this.hole = hole; 
             }
         }
+    }
+    
+    /**
+     * Palautta kentän nimen
+     * @return nimi
+     */
+    public String getName() {
+        return this.name;
     }
     
     /**

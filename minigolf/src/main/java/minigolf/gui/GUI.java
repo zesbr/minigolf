@@ -2,70 +2,63 @@ package minigolf.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.util.EventListener;
-import javax.swing.JButton;
+import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JSlider;
-import javax.swing.UIManager;
-import javax.swing.event.ChangeListener;
 
 /**
- * Pelialustalle kuuluvat graafinen käyttöliittymäpaneeli, jonka tehtävänä
- * on huolehtia käyttöliittymäkomponenttien luomisesta ja alustamisesta. 
+ * Pelialustalle kuuluva graafinen käyttöliittymäpaneeli, jonka tehtävänä
+ * on huolehtia käyttöliittymän komponenttien luomisesta ja alustamisesta. 
  * @author zesbr
  */
 public class GUI extends JPanel {
     
-    private final int POWER_MIN = 0;
-    private final int POWER_MAX = 1000;
-    private final int POWER_INIT = 500;
-    
-    private final int ANGLE_MIN = -180;
-    private final int ANGLE_MAX = 180;
-    private final int ANGLE_INIT = 45;
-    
     private GameCanvas canvas; 
-    private BorderLayout layout;
-    private GameInputManager handler;
-    
     private PowerBar powerBar;
+    private JLabel hintText;
     
     public GUI(GameCanvas canvas) {
         super();
         this.canvas = canvas;
-        this.layout = new BorderLayout();
-        this.handler = new GameInputManager(canvas, POWER_INIT, ANGLE_INIT);
         this.powerBar = new PowerBar(canvas);
-
+        this.hintText = new JLabel();
+        
         init();
         addComponents();
     }
     
-    private void init() {
-        
-        setLayout(null);
-        setOpaque(false);  
-    }
-    
+    /**
+     * Palauttaa lyönnin voimapalkkikomponentin
+     * @return voimapalkki
+     */
     public PowerBar getPowerBar() {
         return powerBar;
     }
     
-    private void addComponents() {    
-       
-powerBar.setForeground(Color.blue);
+    // Alustaa paneelin ja komponentit
+    private void init() { 
+        setLayout(null);
+        setOpaque(false);  
+        powerBar.setForeground(Color.blue);
         powerBar.setBorderPainted(false);
-        powerBar.setBounds(340, 360, 20, 200);
+        powerBar.setBounds(740, 360, 20, 200);
+        hintText.setText("HOLD-AND-RELEASE MOUSE TO SHOOT");
+        hintText.setFont(new Font("Lato Light", Font.PLAIN, 20));
+        hintText.setForeground(Color.WHITE);
+        hintText.setBounds(220, 460, 600, 50);
+    }
+    
+    /**
+     * 
+     */
+    public void disableHint() {
+       hintText.setVisible(false);
+    }
+    
+    // Lisää komponentit paneeliin
+    private void addComponents() {    
         add(powerBar);
-        
-        add(new JLabel("Aim with mouse and hold down the right mouse button"));
+        add(hintText);
     }
     
 }

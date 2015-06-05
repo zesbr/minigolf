@@ -1,6 +1,7 @@
 
 package minigolf.gui;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JProgressBar;
@@ -25,7 +26,6 @@ public class PowerBar extends JProgressBar implements ActionListener {
         this.increase = true;
         this.canvas = canvas;
         this.timer = new Timer(3, this);
-        
         setOpaque(true);
     }
     
@@ -69,6 +69,9 @@ public class PowerBar extends JProgressBar implements ActionListener {
 
     private void put() {
         
+        // Piilottaa hint-tekstin
+        canvas.getGui().disableHint();
+        
         // Hakee peli-instanssin aktiivisen pelaajan
         Player player = canvas.getGame().getActivePlayer();
         Ball ball = player.getBall();
@@ -106,7 +109,6 @@ public class PowerBar extends JProgressBar implements ActionListener {
             power = 1000;
             increase = false;
         }
-        
         // Kasvattaa tai vähentää voimapalkin arvoa
         if (increase) {
             // TODO: Voima palkin arvo voisi kasvaa kiihtyvästi
@@ -114,6 +116,7 @@ public class PowerBar extends JProgressBar implements ActionListener {
         } else{
             power -= 3;
         }
+        transformColor();
         // Asettaa voimapalkin päivityneen arvon
         setValue(power);
         System.out.println("Power = " + power);
@@ -124,6 +127,14 @@ public class PowerBar extends JProgressBar implements ActionListener {
         power = 0;
         increase = true;
         setValue(power);
+    }
+    
+    // Vaihtaa voimapalkinväriä
+    private void transformColor() {
+        int r = 255 * power / 1000;
+        int g = (255 * (1000 - power) / 1000);
+        int b = 0;
+        setForeground(new Color(r, g, b));
     }
     
 }

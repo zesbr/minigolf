@@ -46,9 +46,9 @@ public class GameCanvas extends JPanel implements ActionListener {
     // Valmistelee piirtoalustaan ja lisää siihen alikomponentit
     private void init() {
         setBackground(new Color(138, 224, 0));
-        setLayout(new GridLayout(1, 2)); 
+        setLayout(new GridLayout(1, 1)); 
         // Lisää HUD:n ja Käyttöliittmään pelialustaan
-        add(hud);
+        //add(hud);
         add(gui); 
         // Lisätään pelialustalle tapahtumakuuntelijat
         addMouseListener(mouse);
@@ -94,6 +94,14 @@ public class GameCanvas extends JPanel implements ActionListener {
      */
     public Game getGame() {
         return game;
+    }
+    
+    /**
+     * Palauttaa piirtoalustan graafisen käyttöliittmäpaneelin
+     * @return 
+     */
+    public GUI getGui() {
+        return gui;
     }
     
     // Palauttaa reunepehmennetyn grafiikka-olion

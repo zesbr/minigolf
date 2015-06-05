@@ -48,6 +48,9 @@ public class Game {
         levels.add(LevelArchitect.buildLevel(4));
         levels.add(LevelArchitect.buildLevel(5));
         levels.add(LevelArchitect.buildLevel(6));
+        levels.add(LevelArchitect.buildLevel(7));
+        levels.add(LevelArchitect.buildLevel(8));
+        levels.add(LevelArchitect.buildLevel(9));
     }
     
     /**

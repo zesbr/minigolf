@@ -24,7 +24,7 @@ public class LevelTest {
     
     @Before
     public void setUp() {
-        level = new Level(0, 0, 800, 600, new Tee(800,600), new Hole(0,0));
+        level = new Level(0, 0, 800, 600, new Tee(800,600), new Hole(0,0), "");
     }
     
     @After
@@ -39,7 +39,7 @@ public class LevelTest {
     
     @Test
     public void cannotBeBuiltWithNegativeCoordinates() {
-        Level level = new Level(-100, -100, 800, 600, new Tee(0,0), new Hole(0,0));
+        Level level = new Level(-100, -100, 800, 600, new Tee(0,0), new Hole(0,0), "");
         
         assertEquals(0, level.getX());
         assertEquals(0, level.getY());
@@ -66,7 +66,7 @@ public class LevelTest {
     
     @Test
     public void levelCannotBeConstructedWithNegativeCoordinates() {
-        level = new Level(-10, -10, 800, 600, new Tee(0,0), new Hole(0,0));
+        level = new Level(-10, -10, 800, 600, new Tee(0,0), new Hole(0,0), "");
         int x = level.getX();
         int y = level.getY();
         
