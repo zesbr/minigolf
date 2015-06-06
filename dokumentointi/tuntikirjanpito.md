@@ -10,7 +10,7 @@
 * Käyttötapausten kirjaaminen
 * Labtoolin conffaus ja tehtävien kirjaus 
 
-**Kesto:** 4h
+**Kesto:** 4 h
 
 ### Tiisti 19.5.2015
 
@@ -18,7 +18,7 @@
 * Luokkakaavion piirtely
 * Alustavan sovelluslogiikan toteuttaminen
 
-**Kesto:** 6h
+**Kesto:** 6 h
 
 ### Keskiviikko 20.5.2015
 
@@ -28,7 +28,7 @@
 * Sovelluslogiikan tekeminen
 * Koodin refaktorointi
 
-**Kesto:** 10h
+**Kesto:** 10 h
 
 ### Torstai 21.5
 
@@ -37,21 +37,53 @@
 * Muut dokumentointi tehtävät
 * Sovelluslogiikan tekeminen
 * Koodin refaktorointi
-* JUnit yksikkötestien tekeminen
+* Yksikkötestien tekeminen
 
-**Kesto:** 10h
+**Kesto:** 10 h
 
 ### Keskiviikko 27.5
 
 * Sovelluslogiikan tekeminen
 * Koodin refaktorointi
 
-**Kesto:** 8h
+**Kesto:** 8 h
 
 ### Torstai 28.5
 
 * Sovelluslogiikan tekeminen
+* Törmäyksentunnistamisen toiminnalisuus
 * Koodin refaktorointi
-* JUnit yksikkötestien tekeminen
+* Yksikkötestien tekeminen
 
-** Kesto: 9h
+**Kesto:** 9 h
+
+### Keskiviikko 3.6
+
+* Uusien kenttien tekeminen
+* Kentän ja pelaajan vaihdon toiminnallisuus
+
+**Kesto:** 6 h
+
+### Torstai 4.6
+
+* Pallon animaatio
+* Koodin refaktorointi
+* Sekvenssikaavion piirtäminen
+* Yksikkötestien tekeminen
+
+**Kesto:** 12 h
+
+### Perjantai 5.6
+
+* Käyttöliittymän parantelu
+* Refaktorointia
+
+**Kesto:** 9h
+
+### Lauantai 6.6
+
+* Aihekuvauksen ja vaatimusten päivittäminen
+* Käyttöliittmän hiominen
+* Luokkakaavion päivittäminen
+
+**Kesto:** 3 h
