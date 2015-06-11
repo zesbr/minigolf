@@ -17,6 +17,7 @@ public class ViewManager extends JPanel implements ActionListener {
     
     private final String STARTMENU = "Start Menu";
     private final String GAME = "Game";
+    private final String SCORECARD = "Scorecard";
     
     private App app;
     private CardLayout layout;
@@ -31,19 +32,28 @@ public class ViewManager extends JPanel implements ActionListener {
     // Alustaa näkymänhallitsijan
     private void init() {
         setLayout(layout);
-        startMenu();
+        showStartMenu();
     }
     
-    // Käynnistää päävalikon
-    private void startMenu() {
+    // Näyttää päävalikon
+    private void showStartMenu() {
         add(STARTMENU, new StartMenu(this)); 
         layout.show(this, STARTMENU);
     }
     
-    // Käynnistää uuden pelin
+    // Käynnistää uuden pelin ja näyttää pelialustan
     private void startGame(Game game) {
-        add(GAME, new GameCanvas(game));
+        add(GAME, new GameCanvas(game, this));
         layout.show(this, GAME);
+    }
+    
+    /**
+     * Näyttää tuloskortin pelikierroksen päätteeksi
+     * @param game : peli-instanssi
+     */
+    public void showScorecard(Game game) {
+        add(SCORECARD, new Scorecard(game, this));
+        layout.show(this, SCORECARD);
     }
     
     /**
@@ -53,8 +63,12 @@ public class ViewManager extends JPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if (ae.getActionCommand().equals("New Game")) {
+        if (ae.getActionCommand().equals("NEW GAME")) {
             startGame(new Game());
+        } else if (ae.getActionCommand().equals("CONTINUE")) {
+            showStartMenu();
+        } else if (ae.getActionCommand().equals("QUIT")) {
+            System.exit(0);
         }
     }
     

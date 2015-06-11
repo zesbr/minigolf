@@ -70,5 +70,5 @@ public class Hole extends LevelObject {
         }
         return false;
     }
-    
+   
 }

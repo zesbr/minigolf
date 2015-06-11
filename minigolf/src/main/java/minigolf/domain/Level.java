@@ -1,6 +1,7 @@
 package minigolf.domain;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Pelialuetta mallintava luokka, joka vastaa pelialueen ja siihen kuuluvien
@@ -214,5 +215,5 @@ public class Level {
         // Asettaa oikean seinän
         addObstacle(new Obstacle(topRightX, (topRightY + WALL_THICKNESS), WALL_THICKNESS, (height - (2 * WALL_THICKNESS))));
     }
-    
+     
 }

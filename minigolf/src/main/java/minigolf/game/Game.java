@@ -5,6 +5,7 @@ import minigolf.domain.Level;
 import minigolf.domain.Player;
 import minigolf.domain.Ball;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import minigolf.domain.LevelArchitect;
 
 /**
@@ -15,12 +16,38 @@ import minigolf.domain.LevelArchitect;
  */
 public class Game {
     
-    private ArrayDeque<Level> levels;
+    private ArrayList<Level> levels;
+    private ArrayDeque<Level> unfinishedLevels;
     private ArrayDeque<Player> players;
     
     public Game() {
-        this.levels = new ArrayDeque<>();
+        this.levels = new ArrayList<>();
+        this.players = new ArrayDeque<>();   
+        this.unfinishedLevels = new ArrayDeque<>();
+        
+        init();
+    }
+    
+    public Game(ArrayDeque<Player> players) {
+        this.levels = new ArrayList<>();
+        this.unfinishedLevels = new ArrayDeque<>();
+        this.players = players;
+        
+        init();
+    }
+    
+    public Game(ArrayList<Level> levels) {
+        this.levels = levels;
+        this.unfinishedLevels = new ArrayDeque<>();
         this.players = new ArrayDeque<>();
+        
+        init();
+    }
+    
+    public Game(ArrayList<Level> levels, ArrayDeque<Player> players) {
+        this.levels = levels;
+        this.players = players;
+        this.unfinishedLevels = new ArrayDeque<>();
         
         init();
     }
@@ -29,28 +56,48 @@ public class Game {
     private void init() {
         addPlayers();
         addLevels();
-        placeBallsToTee(getCurrentLevel().getTee()); 
+        
+        placeBallsToTee(getCurrentLevel().getTee());
     }
     
     // Lisää pelaajat
-    private void addPlayers() {   
-        Player p1 = new Player("P1");
-        Player p2 = new Player("P2");
-        players.add(p1);        
-        //players.add(p2);
+    private void addPlayers() { 
+        if (players.isEmpty()) {
+           players.add(new Player("Player 1"));
+        } else if (players.size() > 8) {
+            ArrayDeque<Player> newPlayers = new ArrayDeque<>();
+            int id = 1;
+            for (Player player : players) {
+                if (id == 9) {
+                    break;
+                }
+                newPlayers.add(player);
+                id++;
+            }
+            players = newPlayers;
+        }
     }
     
+    
     // Lisää kentät
-    private void addLevels() {
-        levels.add(LevelArchitect.buildLevel(1));
-        levels.add(LevelArchitect.buildLevel(2));
-        levels.add(LevelArchitect.buildLevel(3));
-        levels.add(LevelArchitect.buildLevel(4));
-        levels.add(LevelArchitect.buildLevel(5));
-        levels.add(LevelArchitect.buildLevel(6));
-        levels.add(LevelArchitect.buildLevel(7));
-        levels.add(LevelArchitect.buildLevel(8));
-        levels.add(LevelArchitect.buildLevel(9));
+    private void addLevels() { 
+        
+        // Jos kenttiä ei ole tai niitä on enemmän kuin yhdeksän, niin alustetaan peli yhdeksällä kentällä
+        if (levels.isEmpty() || levels.size() > 9) {
+            if (levels.size() > 9) {
+                levels = new ArrayList<>();
+            }
+            for (int i = 1; i <= 9; i++) {
+                Level level = LevelArchitect.buildLevel(i);
+                levels.add(level);
+                unfinishedLevels.add(level);
+            }
+        } else {
+            for (Level level : levels) {
+                unfinishedLevels.add(level);
+            }
+        }
+           
     }
     
     /**
@@ -58,17 +105,8 @@ public class Game {
      * @return seuraavaa vuorossa oleva kenttä
      */
     public Level switchLevel() {
-        Level previous = levels.pollFirst();
-        levels.add(previous);
+        unfinishedLevels.pollFirst();
         return getCurrentLevel();
-    }
-    
-    /**
-     * Palauttaa nykyisen kentän eli sen jota parhaillaan pelataan
-     * @return nykyinen kenttä
-     */
-    public Level getCurrentLevel() {
-        return levels.peekFirst();
     }
     
     /**
@@ -83,21 +121,19 @@ public class Game {
     }
     
     /**
+     * Palauttaa nykyisen kentän eli sen jota parhaillaan pelataan
+     * @return nykyinen kenttä
+     */
+    public Level getCurrentLevel() {
+        return unfinishedLevels.peekFirst();
+    }
+    
+    /**
      * Palauttaa aktiivisen pelaajan eli sen kenen vuoro parhaillaan on
      * @return aktiivinen pelaaja
      */
     public Player getActivePlayer() {
         return players.peekFirst();
-    }
-
-    /**
-     * Alustaa jokaisen pelaajan pallot kentän aloituspaikalle.
-     * @param tee : kentän aloituspaikka
-     */
-    public void placeBallsToTee(Tee tee) {
-        for (Player player : players) {
-            player.setBall(new Ball(tee.getX(), tee.getY()));
-        }
     }
     
     /**
@@ -109,5 +145,39 @@ public class Game {
         return player.getBall();
     }
     
+    /**
+     * Alustaa jokaisen pelaajan pallot kentän aloituspaikalle.
+     * @param tee : kentän aloituspaikka
+     */
+    public void placeBallsToTee(Tee tee) {
+        for (Player player : players) {
+            player.setBall(new Ball(tee.getX(), tee.getY()));
+        }
+    }
+     
+    /**
+     * Palautta kaikki kentät
+     * @return kaikki kentät
+     */
+    public ArrayList getAllLevels() {
+        return this.levels;
+    }
+    
+    /**
+     * Palauttaa kaikki pelaajat
+     * @return kaikki pelaajat
+     */
+    public ArrayDeque getAllPlayers() {
+        return this.players;
+    }
+    
+    /**
+     * Palauttaa kaikki kentät, jotka ovat vielä pelaamatta mukaan lukien
+     * nykyinen kenttä
+     * @return kaikki pelaamattomat kentät
+     */
+    public ArrayDeque getUnfinishedLevels() {
+        return this.unfinishedLevels;
+    }
     
 }

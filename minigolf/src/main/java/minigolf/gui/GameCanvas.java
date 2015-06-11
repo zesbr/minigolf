@@ -1,5 +1,6 @@
 package minigolf.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -7,11 +8,8 @@ import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.event.MouseInputListener;
 import minigolf.domain.*;
 import minigolf.game.*;
 
@@ -28,18 +26,20 @@ public class GameCanvas extends JPanel implements ActionListener {
     private HUD hud;
     private Timer timer;
     private MouseInputManager mouse;
+    private ViewManager viewManager;
     
     private final boolean SHOW_HUD = true;
     private final boolean SHOW_GUI = true;
     private final int FPS = 1000 / 60;
     
-    public GameCanvas(Game game) {
+    public GameCanvas(Game game, ViewManager viewManager) {
         super();  
         this.game = game;
         this.gui = new GUI(this);
         this.hud = new HUD(this);
         this.timer = new Timer(FPS, this);
         this.mouse = new MouseInputManager(gui.getPowerBar());
+        this.viewManager = viewManager;
         init();
     }
     
@@ -47,9 +47,11 @@ public class GameCanvas extends JPanel implements ActionListener {
     private void init() {
         setBackground(new Color(138, 224, 0));
         setLayout(new GridLayout(1, 1)); 
+        //setLayout(new BorderLayout());
         // Lisää HUD:n ja Käyttöliittmään pelialustaan
         //add(hud);
         add(gui); 
+        //remove(scorecard);
         // Lisätään pelialustalle tapahtumakuuntelijat
         addMouseListener(mouse);
     }
@@ -60,6 +62,7 @@ public class GameCanvas extends JPanel implements ActionListener {
      */
     public void startTimer() {
         timer.start();
+        
     }
     
     /**
@@ -208,6 +211,7 @@ public class GameCanvas extends JPanel implements ActionListener {
             
             // Hakee nykyisen kentän ja tarkistaa oliko pallo reiässä
             Level level = game.getCurrentLevel();
+            
             if (level.ballIsInHole(ball)) {
                 
                 // TODO: Tässä tulisi tapahtua reikään uppoamisen ääniefekti
@@ -227,14 +231,26 @@ public class GameCanvas extends JPanel implements ActionListener {
                 }
                 
                 // Vaihtaa pelaajan
-                player = game.switchPlayer();               
+                player = game.switchPlayer();       
+                
                 // Tarkistaa onko pelaaja pelannut jo reiän ja vaihtaa kentän tarvittaessa
                 if (player.getScore(level) != -1) {
                     level = game.switchLevel();
-                    game.placeBallsToTee(level.getTee());
-                }
-                // Piirtää alustan uudelleen
-                repaint();
+                    
+                    if (level == null) {
+                        System.out.println("KENTÄT LÄPI PELATTU");
+                        stopTimer();
+                        viewManager.showScorecard(game);
+                        //add(scorecard);
+                        //stopTimer();
+                    } else {
+                        game. placeBallsToTee(level.getTee());
+                        repaint();
+                    }
+                } else {
+                  // Piirtää alustan uudelleen
+                    repaint();  
+                } 
             }
             // Pysäyttää ajastimen lyönnin päätteeksi
             stopTimer();

@@ -1,7 +1,8 @@
 package minigolf.domain;
 
 /**
- * Abstrakti luokka, jonka pelikentän staattiset objektit perivät.
+ * Pelikentällä sijaitsevien liikumattomien objektien sijaintia mallintava 
+ * abstrakti luokka, jonka reikä, aloituspaikka ja este perivät.
  * @author zesbr
  */
 public abstract class LevelObject {

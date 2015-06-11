@@ -4,7 +4,7 @@ import minigolf.game.Game;
 import minigolf.gui.GameCanvas;
 
 /**
- * Dynaamista golfpalloa mallintava luokka, jonka tehtävä on huolehtia palloon 
+ * Liikkuvaa golfpalloa mallintava luokka, jonka tehtävä on huolehtia palloon 
  * ja sen liikkeeseen liittyvien palveluiden laskennasta
  * @author zesbr
  */

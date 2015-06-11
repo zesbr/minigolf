@@ -1,6 +1,7 @@
 package minigolf.domain;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Pelikierrokselle osallistuvaa pelaajaa mallintava luokka, jonka tehtävänä on
@@ -78,7 +79,9 @@ public class Player {
      * @param score : tulos eli lyöntien lukumäärä (arvo)
      */
     public void addScore(Level level, int score) {
-        this.scorecard.put(level, score);
+        if (level != null) {
+            this.scorecard.put(level, score);
+        }
     }
     
     /**
@@ -94,5 +97,5 @@ public class Player {
             return -1;
         }
     }
-     
+
 }

@@ -10,7 +10,7 @@
 * Käyttötapausten kirjaaminen
 * Labtoolin conffaus ja tehtävien kirjaus 
 
-**Kesto:** 4 h
+Työmäärä: 4h
 
 ### Tiisti 19.5.2015
 
@@ -18,7 +18,7 @@
 * Luokkakaavion piirtely
 * Alustavan sovelluslogiikan toteuttaminen
 
-**Kesto:** 6 h
+Työmäärä: 6h
 
 ### Keskiviikko 20.5.2015
 
@@ -28,7 +28,7 @@
 * Sovelluslogiikan tekeminen
 * Koodin refaktorointi
 
-**Kesto:** 10 h
+Työmäärä: 10h
 
 ### Torstai 21.5
 
@@ -39,14 +39,14 @@
 * Koodin refaktorointi
 * Yksikkötestien tekeminen
 
-**Kesto:** 10 h
+Työmäärä: 10h
 
 ### Keskiviikko 27.5
 
 * Sovelluslogiikan tekeminen
 * Koodin refaktorointi
 
-**Kesto:** 8 h
+Työmäärä: 8h
 
 ### Torstai 28.5
 
@@ -55,14 +55,14 @@
 * Koodin refaktorointi
 * Yksikkötestien tekeminen
 
-**Kesto:** 9 h
+Työmäärä: 9h
 
 ### Keskiviikko 3.6
 
 * Uusien kenttien tekeminen
 * Kentän ja pelaajan vaihdon toiminnallisuus
 
-**Kesto:** 6 h
+Työmäärä: 6h
 
 ### Torstai 4.6
 
@@ -71,14 +71,14 @@
 * Sekvenssikaavion piirtäminen
 * Yksikkötestien tekeminen
 
-**Kesto:** 12 h
+Työmäärä: 12h
 
 ### Perjantai 5.6
 
 * Käyttöliittymän parantelu
 * Refaktorointia
 
-**Kesto:** 9h
+Työmäärä: 9h
 
 ### Lauantai 6.6
 
@@ -86,4 +86,30 @@
 * Käyttöliittmän hiominen
 * Luokkakaavion päivittäminen
 
-**Kesto:** 3 h
+Työmäärä: 3h
+
+
+### Tiistai 9.6
+
+* Sovelluslogiikan tekeminen
+* Koodin refaktorointi
+* Javadocin päivitys
+
+Työmäärä: 4h
+
+### Keskiviikko 10.6
+
+* Graafisen käyttöliitymän tekeminen
+* Koodin refaktorointi
+* Javadocin päivitys
+
+Työmäärä: 6h
+
+### Torstai 11.6
+
+* Koodin refaktorointi
+* JUnit testien kirjoittaminen
+* Sekvenssikaavioiden piirtäminen
+* Dokumentoinnin päivitys
+
+Työmäärä: 6h 

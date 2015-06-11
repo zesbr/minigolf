@@ -42,10 +42,10 @@ public class GUI extends JPanel {
         powerBar.setForeground(Color.blue);
         powerBar.setBorderPainted(false);
         powerBar.setBounds(740, 360, 20, 200);
-        hintText.setText("HOLD-AND-RELEASE MOUSE TO SHOOT");
-        hintText.setFont(new Font("Lato Light", Font.PLAIN, 20));
+        hintText.setText("Hold and release left mouse button to shoot");
+        hintText.setFont(new Font("Lato Light", Font.BOLD, 18));
         hintText.setForeground(Color.WHITE);
-        hintText.setBounds(220, 460, 600, 50);
+        hintText.setBounds(200, 460, 600, 50);
     }
     
     /**

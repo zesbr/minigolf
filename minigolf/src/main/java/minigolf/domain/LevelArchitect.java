@@ -33,7 +33,7 @@ public class LevelArchitect {
             case 9:
                 return level09();
             default:
-                return level01();
+                return null;
         }
 
     }
