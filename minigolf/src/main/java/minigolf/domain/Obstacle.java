@@ -127,22 +127,26 @@ public class Obstacle extends LevelObject {
     public boolean hitsCorners(Ball ball) { 
         // Tarkistaa osuuko pallo esteen vasempaan yläkulmaan
         if (hitsTopLeftCorner(ball)) {
-            ball.calculateAngleFromCornerCollision(getLeftSideX(), getTopSideY());
+            //ball.calculateAngleFromCornerCollision(getLeftSideX(), getTopSideY());
+            ball.calcualateAngleFromTopLeftCollision();
             return true;
         }
         // Tarkistaa osuuko pallo esteen oikeaan yläkulmaan
         if (hitsTopRightCorner(ball)) {
-            ball.calculateAngleFromCornerCollision(getRightSideX(), getTopSideY());
+            // ball.calculateAngleFromCornerCollision(getRightSideX(), getTopSideY());
+            ball.calcualateAngleFromTopRightCollision();
             return true;
         }
         // Tarkistaa osuuko pallo esteen oikeaan alakulmaan
         if (hitsBottomRightCorner(ball)) {
-            ball.calculateAngleFromCornerCollision(getRightSideX(), getBottomSideY());
+            // ball.calculateAngleFromCornerCollision(getRightSideX(), getBottomSideY());
+            ball.calcualateAngleFromBottomRightCollision();
             return true;
         }
         // Tarkistaa osuuko pallo esteen vasempaan alakulmaan
         if (hitsBottomLeftCorner(ball)) {
-            ball.calculateAngleFromCornerCollision(getLeftSideX(), getBottomSideY());
+            // ball.calculateAngleFromCornerCollision(getLeftSideX(), getBottomSideY());
+            ball.calcualateAngleFromBottomLeftCollision();
             return true;
         }
         return false;

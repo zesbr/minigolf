@@ -272,6 +272,36 @@ public class Ball {
         angle -= (double) Math.toDegrees(Math.atan2((this.y - getCenterY()), -(this.x - getCenterX())));
     }
     
+    public void calcualateAngleFromTopLeftCollision() {
+        if (this.angle >= -135 && this.angle <= 45) {
+            this.angle -= 45;
+            calculateAngleFromVerticalCollision();
+            this.angle += 45;
+        }
+    }
+    
+    public void calcualateAngleFromTopRightCollision() {
+        if ((this.angle <= -45 && this.angle >= -180) || (this.angle >= 135 & this.angle <= 180)) {
+            this.angle += 45;
+            calculateAngleFromVerticalCollision();
+            this.angle -= 45;
+        }
+    }
+    
+    public void calcualateAngleFromBottomRightCollision() {
+        if ((this.angle >= 45 && this.angle <= 180) || (this.angle <= -135 && this.angle >= -180)) {
+            this.angle -= 45;
+            calculateAngleFromVerticalCollision();
+            this.angle += 45;
+        }
+    }
+    
+    public void calcualateAngleFromBottomLeftCollision() {
+         this.angle += 45;
+         calculateAngleFromVerticalCollision();
+        this.angle -= 45;
+    }
+    
     /**
      * Laskeen kulman pallon ja pisteen välillä ja palauttaa kulman suuruuden
      * @param x : pisteen x-koordinaatti
