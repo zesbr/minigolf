@@ -1,13 +1,10 @@
 package minigolf.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import minigolf.domain.*;
@@ -19,7 +16,7 @@ import minigolf.game.*;
  * piirtotapahtumista.
  * @author zesbr
  */
-public class GameCanvas extends JPanel implements ActionListener {
+public class GameCanvas extends JPanel {
    
     private Game game;
     private GUI gui;
@@ -37,7 +34,7 @@ public class GameCanvas extends JPanel implements ActionListener {
         this.game = game;
         this.gui = new GUI(this);
         this.hud = new HUD(this);
-        this.timer = new Timer(FPS, this);
+        this.timer = new Timer(FPS, new GameCanvasUpdater(this));
         this.mouse = new MouseInputManager(gui.getPowerBar());
         this.viewManager = viewManager;
         init();
@@ -47,12 +44,7 @@ public class GameCanvas extends JPanel implements ActionListener {
     private void init() {
         setBackground(new Color(138, 224, 0));
         setLayout(new GridLayout(1, 1)); 
-        //setLayout(new BorderLayout());
-        // Lisää HUD:n ja Käyttöliittmään pelialustaan
-        //add(hud);
         add(gui); 
-        //remove(scorecard);
-        // Lisätään pelialustalle tapahtumakuuntelijat
         addMouseListener(mouse);
     }
     
@@ -187,74 +179,8 @@ public class GameCanvas extends JPanel implements ActionListener {
         paint(graphics, game.getActiveBall());
     }
     
-    /**
-     * TODO: 
-     * Refaktoroi. Tästä voisi tehdä oman luokan
-     * 
-     * Luokan ajastinta kuunteleva tapahtumakäsittelijä, jota kutsutaan aina kun 
-     * pallo on liikkeessä 60 kertaa sekunnissa
-     * @param ae : ajastimen tapahtuma
-     */
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        // Hakee pelissä olevan pallon
-        Ball ball = game.getActiveBall();
-        // Tarkistetaan onko pallo liikkeessä
-        if (ball.getSpeed() > 0) {   
-            // Liikuttaa palloa
-            ball.move(this);
-            // Piirtää alustan uudelleen
-            repaint();    
-        } else {
-            // Nollataan pallon liike, jos se on negatiivinen
-            ball.setSpeed(0);  
-            
-            // Hakee nykyisen kentän ja tarkistaa oliko pallo reiässä
-            Level level = game.getCurrentLevel();
-            
-            if (level.ballIsInHole(ball)) {
-                
-                // TODO: Tässä tulisi tapahtua reikään uppoamisen ääniefekti
-
-                // Kirjaa pelaajan tuloksen ja nollaa lyöntilaskurin
-                Player player = game.getActivePlayer();
-                System.out.println(player.getName() + " pelasi pallon reikään " + player.getStrikes() + " lyönnillä.");
-                player.addScore(level, player.getStrikes());
-                player.initStrikes();
-                // TODO: Näytä pelaajan tuloskortin
-                
-                // Jäädytää kuvan kolmeksi sekunniksi
-                try {
-                    Thread.sleep(3000l);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-                
-                // Vaihtaa pelaajan
-                player = game.switchPlayer();       
-                
-                // Tarkistaa onko pelaaja pelannut jo reiän ja vaihtaa kentän tarvittaessa
-                if (player.getScore(level) != -1) {
-                    level = game.switchLevel();
-                    
-                    if (level == null) {
-                        System.out.println("KENTÄT LÄPI PELATTU");
-                        stopTimer();
-                        viewManager.showScorecard(game);
-                        //add(scorecard);
-                        //stopTimer();
-                    } else {
-                        game. placeBallsToTee(level.getTee());
-                        repaint();
-                    }
-                } else {
-                  // Piirtää alustan uudelleen
-                    repaint();  
-                } 
-            }
-            // Pysäyttää ajastimen lyönnin päätteeksi
-            stopTimer();
-        }
+    public void showScoreCard() {
+        viewManager.showScorecard(game);
     }
      
 }

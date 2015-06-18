@@ -195,22 +195,27 @@ public class Ball {
     }
     
     /**
-     * Liikuttaa palloa
+     * Liikuttaa palloa. Pallon liikkuminen tapahtuu askeleittain pikseli 
+     * kerrallaan. Askeleiden määrä on pallon nopeus/60. Jokainen askel hidastaa 
+     * pallon nopeutta 0.75:llä. Lisäksi, jokaisen askeleen aikana tarkastetaan 
+     * onko pallon keskipiste reiän kehän sisällä, jolloin pallo uppoaa reikään, 
+     * mikäli sen nopeus ei ole liian suuri. Lisäksi tarkistetaan, että osuuko 
+     * pallo johonkin kentän esteistä, jolloin pallon suunta voi muuttua.
+     * 
      * @param canvas : pelialusta
      */
-    public void move(GameCanvas canvas) {
-        // Haetaan pelialustan peli-instanssi
-        Game game = canvas.getGame();
-        // Haetaan nykyinen pelikenttä
-        Level level = game.getCurrentLevel();
+    public void move(GameCanvas canvas) {    
+        Game game = canvas.getGame(); // Haetaan pelialustan peli-instanssi   
+        Level level = game.getCurrentLevel(); // Haetaan nykyinen pelikenttä
+        
         // Laskee kuinka monta "steppiä" pallo siirtyy yhden ajastimen päivittymisen aikana
         int steps = (int) (getSpeed()) / 60;
         for (int i = 0; i <= steps; i++) {
             // Lasketaan ja asetetaan pallon uusi sijainti
             x = (float) (x + Math.cos(1.0 * Math.toRadians(angle)));
-            y = (float) (y - Math.sin(1.0 * Math.toRadians(angle))); 
-            // Vähennetään pallon nopeutta
-            speed -= 0.75;
+            y = (float) (y - Math.sin(1.0 * Math.toRadians(angle)));   
+            speed -= 0.75; // Vähennetään pallon nopeutta
+            
             // Tarkistaa onko pallo reiässä
             if (level.ballIsInHole(this)) {
                 speed = 0; 
@@ -219,15 +224,13 @@ public class Ball {
                 break;
             }
             // Tarkistaa osuuko pallo esteeseen
-            if (level.ballHitsObstacle(this)) { 
-                
-            }
+            level.ballHitsObstacle(this);
         }
                
     }
     
     /**
-     * Tarkistaa osuuko piste palloon eli onko se sen kehän sisällä ja 
+     * Tarkistaa osuuko piste palloon eli onko piste pallon kehän sisällä ja 
      * palauttaa totuusarvon
      * @param x : pisteen x-koordinaatti
      * @param y : pisteen y-koordinaatti
@@ -263,15 +266,9 @@ public class Ball {
     }
     
     /**
-     * Laskee ja asettaa pallon uuden kulman esteen kulmaan törmäämisen johdosta
-     * TODO: Tämä ei laske vielä sinnepäinkään oikein
-     * @param x : kulman x-koordinaatti
-     * @param y : kulman y-koordinaatti
+     * Laskee ja asettaa pallole uuden kulman esteen vasempaan yläkulmaan 
+     * törmäämisen seurauksena.
      */
-    public void calculateAngleFromCornerCollision(int x, int y) {
-        angle -= (double) Math.toDegrees(Math.atan2((this.y - getCenterY()), -(this.x - getCenterX())));
-    }
-    
     public void calcualateAngleFromTopLeftCollision() {
         if (this.angle >= -135 && this.angle <= 45) {
             this.angle -= 45;
@@ -280,6 +277,10 @@ public class Ball {
         }
     }
     
+    /**
+     * Laskee ja asettaa pallole uuden kulman esteen oikeaan yläkulmaan 
+     * törmäämisen seurauksena.
+     */
     public void calcualateAngleFromTopRightCollision() {
         if ((this.angle <= -45 && this.angle >= -180) || (this.angle >= 135 & this.angle <= 180)) {
             this.angle += 45;
@@ -288,6 +289,10 @@ public class Ball {
         }
     }
     
+     /**
+     * Laskee ja asettaa pallole uuden kulman esteen oikeaan alakulmaan 
+     * törmäämisen seurauksena.
+     */
     public void calcualateAngleFromBottomRightCollision() {
         if ((this.angle >= 45 && this.angle <= 180) || (this.angle <= -135 && this.angle >= -180)) {
             this.angle -= 45;
@@ -296,6 +301,10 @@ public class Ball {
         }
     }
     
+    /**
+     * Laskee ja asettaa pallole uuden kulman esteen vasempaan alakulmaan 
+     * törmäämisen seurauksena.
+     */
     public void calcualateAngleFromBottomLeftCollision() {
          this.angle += 45;
          calculateAngleFromVerticalCollision();

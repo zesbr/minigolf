@@ -66,31 +66,18 @@ public class PowerBar extends JProgressBar implements ActionListener {
         this.aimY = y;
     }
     
-
+    // Suorittaa lyönnin aktiivisella pelaajalla
     private void put() {
-        
-        // Piilottaa hint-tekstin
-        canvas.getGui().disableHint();
-        
-        // Hakee peli-instanssin aktiivisen pelaajan
+        canvas.getGui().disableHint();  // Piilottaa hint-tekstin
         Player player = canvas.getGame().getActivePlayer();
-        Ball ball = player.getBall();
-
-        double angle = ball.getAngleToPoint(aimX, aimY);
+        Ball ball = player.getBall(); // Hakee aktiivisen pelaajan pallon
+        double angle = ball.getAngleToPoint(aimX, aimY); // Laskee lyönnin kulman
 
         // Tarkistaa ettei pelialustan ajastin ole käynnissä
         if (!canvas.timerIsRunning()) {
-            
-            System.out.println(player.getName() + " lyö palloa voimalla " + power + " ja kulmassa " + angle);
-            
-            // Suorittaa putin aktiivisella pelaajalla
-            player.put(power, angle);
-            
-            // Käynnistää pelialustan ajastimen  
-            canvas.startTimer();
-            
-            // TODO: Disable putti painike
-            
+            System.out.println(player.getName() + " lyö palloa voimalla " + power + " ja kulmassa " + angle); 
+            player.put(power, angle); // Suorittaa putin aktiivisella pelaajalla
+            canvas.startTimer(); // Käynnistää pelialustan ajastimen  
         }
     }
     
@@ -111,7 +98,6 @@ public class PowerBar extends JProgressBar implements ActionListener {
         }
         // Kasvattaa tai vähentää voimapalkin arvoa
         if (increase) {
-            // TODO: Voima palkin arvo voisi kasvaa kiihtyvästi
             power += 3;
         } else{
             power -= 3;
@@ -129,7 +115,7 @@ public class PowerBar extends JProgressBar implements ActionListener {
         setValue(power);
     }
     
-    // Vaihtaa voimapalkinväriä
+    // Vaihtaa voimapalkin väriä
     private void transformColor() {
         int r = 255 * power / 1000;
         int g = (255 * (1000 - power) / 1000);

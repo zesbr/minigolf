@@ -129,6 +129,41 @@ public class Game {
     }
     
     /**
+     * Kirjaa pelaajan lyönnit tuloskortiin
+     */
+    public void markScore() {
+        Player player = getActivePlayer();
+        player.addScore(getCurrentLevel(), player.getStrikes());
+        System.out.println(player.getName() + " pelasi pallon reikään " + player.getStrikes() + " lyönnillä.");
+        player.initStrikes();
+    }
+    
+    /**
+     * Tarkistaa onko peli päättynyt ja palautta totuusarvon.
+     * @return totuusarvo siitä onko peli päättynyt (true) vai ei (false)
+     */
+    public boolean hasEnded() {
+        Level level = getCurrentLevel();
+        if (level == null) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Tarkistaa ovatko kaikki pelaajat pelanneet nykyisen kentän ja palauttaa 
+     * totuusarvon.
+     * @return totuusarvo ovatko kaikki pelanneet kentän (true) vai eivät (false)
+     */
+    public boolean allPlayersHaveCompletedLevel() {
+        Player player = getActivePlayer();
+        if (player.getScore(getCurrentLevel()) != -1) {
+            return true;
+        }
+        return false;
+    }
+     
+    /**
      * Palauttaa aktiivisen pelaajan eli sen kenen vuoro parhaillaan on
      * @return aktiivinen pelaaja
      */
