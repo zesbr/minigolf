@@ -1,3 +1,4 @@
+
 # Tuntikirjanpito
 
 ### Tiistai 12.5.2015
@@ -113,3 +114,23 @@ Työmäärä: 6h
 * Dokumentoinnin päivitys
 
 Työmäärä: 6h 
+
+### Tiistai 16.6
+
+* Demo valmistelut
+
+Työmäärä: 2h
+
+### Keskiviikko 17.6
+
+* Dokumentaation ajantasaistaminen 
+
+Työmäärä: 2h
+
+### Torstai 18.6
+
+* Refaktorointia 
+* Dokumentaation ajantasaistaminen
+* Loppupalautuksen valmistelu
+
+Työmäärä: 5h
